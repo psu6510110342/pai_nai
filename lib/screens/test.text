@@ -1,0 +1,28 @@
+return Scaffold(
+    body:Stack(
+        children:[
+            Positioned(
+            left: 0,
+            right: 0,
+            bottom: 0,
+            child: AnimatedSize(
+              vsync: this,
+              curve: Curves.bounceIn,
+              duration: new Duration(milliseconds: 160),
+              child: Container(
+                height: 300,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(18),
+                      topRight: Radius.circular(18)),
+                ),
+                
+              ),
+            ),
+          ),
+        ],
+    ),
+);
+
+

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "720936909665",
+    "firebase_url": "https://painai-22177-default-rtdb.firebaseio.com",
+    "project_id": "painai-22177",
+    "storage_bucket": "painai-22177.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:720936909665:android:907a8a04d9a78c9751e320",
+        "android_client_info": {
+          "package_name": "com.example.pai_nai"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "720936909665-ni4ad30d4ga1fk23lhnti3kuk70jhhjf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD5lvgiYCm1i_5KpBEfK5VtX3z2CMu4tys"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "720936909665-ni4ad30d4ga1fk23lhnti3kuk70jhhjf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
