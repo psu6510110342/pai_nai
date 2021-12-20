@@ -158,10 +158,10 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
 
   void initState() {
     super.initState();
-    //getMarkerData();
+      //getMarkerData();
 
-    //carstop();
-     //inputData();
+      //carstop();
+      //inputData();
 
     BitmapDescriptor.fromAssetImage(
             ImageConfiguration(size: Size(1, 1)), 'images/car_stop.png')
