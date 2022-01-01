@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:pai_nai/DataHandler/appData.dart';
+import 'package:pai_nai/newscreens_2/home_screen.dart';
 //import 'package:pai_nai/newscreens_2/home_screen.dart';
 import 'package:pai_nai/newscrssns/home.dart';
 import 'package:pai_nai/newscrssns/home_2.dart';
@@ -57,7 +58,7 @@ class MyApp extends StatelessWidget {
         initialRoute: MainScreen.idScreen,
         routes: {
           Mapdriver.idScreen: (context) => Mapdriver(),
-          //Homescreen.idScreen: (context) => Homescreen(),
+          Homescreen.idScreen: (context) => Homescreen(),
           Home2.idScreen: (context) => Home2(),
           Home.idScreen: (context) => Home(),
           MainScreen.idScreen: (context) => MainScreen(),

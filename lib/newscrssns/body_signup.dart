@@ -101,7 +101,7 @@ class _BodysignupState extends State<Bodysignup> {
             .collection('location_user')
             .doc('$user_uid');
         locate.set({
-          /* 'geo': pointuser.data */ 
+          
           'lat': '$lati',
           'lng': '$lngi',
           'way': 'null',
@@ -111,7 +111,7 @@ class _BodysignupState extends State<Bodysignup> {
         Navigator.of(context).pushAndRemoveUntil(
             materialPageRoute, (Route<dynamic> route) => false);
       }
-      GeoFirePoint point = geo.point(latitude: 0, longitude: 0);
+      
       if (type == 'driver') {
         var locate = firebaseFirestore
             .collection('location')
@@ -121,7 +121,7 @@ class _BodysignupState extends State<Bodysignup> {
         locate.set({
           'lat': '$lati',
           'lng': '$lngi',
-          /* 'geo': point.data */ 'driverplte': '$driverPlate',
+          'driverplte': '$driverPlate',
           'count': 0
         });
         MaterialPageRoute materialPageRoute =
@@ -497,6 +497,9 @@ class _BodysignupState extends State<Bodysignup> {
         child: Column(
           children: <Widget>[
             driverplate(),
+            SizedBox(
+                      height: 10.0,
+                    ),
             dropdown(),
             //drop(),
             SizedBox(
@@ -661,9 +664,7 @@ class _BodysignupState extends State<Bodysignup> {
                     ),
                     userradio(),
                     driverradio(),
-                    SizedBox(
-                      height: 4.0,
-                    ),
+                    
                     driver_data(),
                     SizedBox(
                       height: 30.0,

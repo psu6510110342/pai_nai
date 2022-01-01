@@ -82,7 +82,10 @@ flutter:
      - images/redmarker.png
      - images/taxi.png
      - images/user_icon.png
+     - images/user_icon_map.png
      - images/car_stop.png
+     - images/car_stop_2.png
+     - images/car_map.png
      #- assets/svg/arrow.svg
      - lang/en.json
      - lang/zh.json

@@ -1,24 +1,19 @@
 import 'dart:async';
-import 'dart:convert';
-import 'dart:typed_data';
-import 'dart:ui' as ui;
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:geoflutterfire/geoflutterfire.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:pai_nai/Assistants/assistantsMethods.dart';
 import 'package:pai_nai/DataHandler/appData.dart';
 import 'package:pai_nai/Models/directDetails.dart';
+import 'package:pai_nai/newscreens_2/home_screen.dart';
 //import 'package:pai_nai/newscreens_2/home_screen.dart';
 import 'package:pai_nai/newscrssns/setting.dart';
 import 'package:pai_nai/screens/sraechScreen.dart';
-import 'package:pai_nai/widgets/Divider.dart';
 import 'package:pai_nai/widgets/progressDialog.dart';
 import 'package:provider/provider.dart';
 
@@ -85,8 +80,6 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
 
     await carStop();
 
-    await getMarkerData();
-
     setState(() {
       searchContainerHeight = 0;
       rideDetailContainerHeight = 0;
@@ -100,11 +93,11 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
 
   final FirebaseAuth auth = FirebaseAuth.instance;
 //เอาข้อมูลจาก firebase มาเก็บ
-  getMarkerData() async {
+  getMarkerDataBrown() async {
     FirebaseFirestore.instance
         .collection('location')
         .doc('driver')
-        .collection('สายสีขาว')
+        .collection('สายสีน้ำตาลแดง')
         .get()
         .then((myMockDoc) {
       if (myMockDoc.docs.isNotEmpty) {
@@ -137,6 +130,40 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
     });
   }
 
+  getMarkerDataBlue() async {
+    FirebaseFirestore.instance
+        .collection('location')
+        .doc('driver')
+        .collection('สายสีน้ำเงิน')
+        .get()
+        .then((myMockDoc) {
+      if (myMockDoc.docs.isNotEmpty) {
+        for (int i = 0; i < myMockDoc.docs.length; i++) {
+          print('-----------------------------------------------' +
+              myMockDoc.docs[i].id.toString());
+          Map<String, dynamic> data = myMockDoc.docs[i].data();
+          var lat = double.parse(data['lat']);
+          var lng = double.parse(data['lng']);
+          LatLng latLngPositionDriver = LatLng(lat, lng);
+          var userID = myMockDoc.docs[i].id;
+          final MarkerId markerId = MarkerId(userID);
+          Marker driverPlace = Marker(
+            infoWindow: InfoWindow(title: data['driverPlate']),
+            icon: pinicon,
+            position: latLngPositionDriver,
+            markerId: markerId,
+            /* onTap: () {
+              
+            }, */
+          );
+          setState(() {
+            markersSet.add(driverPlace);
+          });
+        }
+      }
+    });
+  }
+
   void initMarker(specify, specifyId) async {
     var markerIdVal = specifyId;
     final MarkerId markerId = MarkerId(markerIdVal);
@@ -158,19 +185,17 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
 
   void initState() {
     super.initState();
-      //getMarkerData();
+    //getMarkerData();
 
-      //carstop();
-      //inputData();
+    //carstop();
+    //inputData();
 
     BitmapDescriptor.fromAssetImage(
-            ImageConfiguration(size: Size(1, 1)), 'images/car_stop.png')
+            ImageConfiguration(size: Size(1, 1)), 'images/car_map.png')
         .then((value) {
       pinicon = value;
     });
   }
-
-  Geoflutterfire geo = Geoflutterfire();
 
   void locatePosition() async {
     Position position = await Geolocator.getCurrentPosition(
@@ -218,34 +243,6 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
         .update({
       'way': 'สายสีน้ำเงิน',
     });
-    /* Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
-    currentPosition = position;
-    LatLng latLngPosition = LatLng(position.latitude, position.longitude);
-    CameraPosition cameraPosition =
-        new CameraPosition(target: latLngPosition, zoom: 16);
-    newGoogleMapController
-        .animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
-    String address =
-        await AssistantsMethods.searchCoodinateAddress(position, context);
-    Geoflutterfire geo = Geoflutterfire();
-    GeoFirePoint pointuser =
-        geo.point(latitude: position.latitude, longitude: position.longitude);
-    FirebaseAuth firebaseAuth = FirebaseAuth.instance;
-    String uid = firebaseAuth.currentUser.uid;
-    var user_uid = firebaseAuth.currentUser.uid;
-    FirebaseFirestore.instance
-        .collection('location')
-        .doc('user')
-        .collection('null')
-        .doc('$user_uid')
-        .delete();
-    FirebaseFirestore.instance
-        .collection('location')
-        .doc('user')
-        .collection('สายสีน้ำเงิน')
-        .doc('$user_uid')
-        .set({'geo': pointuser.data}); */
   }
 
   void moveBrown() async {
@@ -258,34 +255,6 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
         .update({
       'way': 'สายสีน้ำตาลแดง',
     });
-    /* Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
-    currentPosition = position;
-    LatLng latLngPosition = LatLng(position.latitude, position.longitude);
-    CameraPosition cameraPosition =
-        new CameraPosition(target: latLngPosition, zoom: 16);
-    newGoogleMapController
-        .animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
-    String address =
-        await AssistantsMethods.searchCoodinateAddress(position, context);
-    Geoflutterfire geo = Geoflutterfire();
-    GeoFirePoint pointuser =
-        geo.point(latitude: position.latitude, longitude: position.longitude);
-    FirebaseAuth firebaseAuth = FirebaseAuth.instance;
-    String uid = firebaseAuth.currentUser.uid;
-    var user_uid = firebaseAuth.currentUser.uid;
-    FirebaseFirestore.instance
-        .collection('location')
-        .doc('user')
-        .collection('null')
-        .doc('$user_uid')
-        .delete();
-    FirebaseFirestore.instance
-        .collection('location')
-        .doc('user')
-        .collection('สายสีน้ำตาลแดง')
-        .doc('$user_uid')
-        .set({'geo': pointuser.data}); */
   }
 
   static final CameraPosition _kGooglePlex = CameraPosition(
@@ -403,11 +372,11 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
             left: 22,
             child: GestureDetector(
               onTap: () async {
-                /* var res = await Navigator.push(context,
+                var res = await Navigator.push(context,
                     MaterialPageRoute(builder: (context) => Homescreen()));
                 if (res == 'obtainDirection') {
                   displayRideDetailsContainer();
-                } */
+                }
                 if (drawOpen) {
                   scaffoldKey.currentState.openDrawer();
                 }
@@ -417,6 +386,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                 }
               },
               child: Container(
+                
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(22),
@@ -428,8 +398,10 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                       offset: Offset(0.7, 0.7),
                     ),
                   ],
+                  
                 ),
                 child: CircleAvatar(
+                  
                   backgroundColor: Colors.white,
                   child: Icon(
                     //Icons.menu,
@@ -669,6 +641,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                           onPressed: () {
                             moveBule();
                             carOutContainer();
+                            getMarkerDataBlue();
                           },
                           color: Theme.of(context).accentColor,
                           child: Padding(
@@ -704,6 +677,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                           onPressed: () {
                             moveBrown();
                             carOutContainer();
+                            getMarkerDataBrown();
                           },
                           color: Theme.of(context).accentColor,
                           child: Padding(
@@ -1035,20 +1009,19 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
     Marker car_1Stop = Marker(
       //infoWindow: InfoWindow(title: 'car stop'),
       icon: pinicon,
-      position: LatLng(7.027333, 100.474762),
+      position: LatLng(7.028850, 100.474431),
       markerId: MarkerId('carstop1'),
-      
     );
     Marker car_2Stop = Marker(
       //infoWindow: InfoWindow(title: 'car stop'),
       icon: pinicon,
-      position: LatLng(7.0272526, 100.47476),
+      position: LatLng(7.031661, 100.474923),
       markerId: MarkerId('carstop2'),
     );
     Marker car_3Stop = Marker(
       //infoWindow: InfoWindow(title: 'car stop'),
       icon: pinicon,
-      position: LatLng(7.0272527, 100.4747629),
+      position: LatLng(7.025432, 100.475299),
       markerId: MarkerId('carstop3'),
     );
     setState(() {

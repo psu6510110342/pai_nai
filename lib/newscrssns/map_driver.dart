@@ -70,18 +70,12 @@ class _MapdriverState extends State<Mapdriver> {
 
   Set<Marker> markersSet = {};
 
-
   BitmapDescriptor pinicon;
 
   void initState() {
     super.initState();
-    getMarkerData();
-
-    //carstop();
-    //inputData();
-
     BitmapDescriptor.fromAssetImage(
-            ImageConfiguration(size: Size(1, 1)), 'images/car_stop.png')
+            ImageConfiguration(size: Size(1, 1)), 'images/user_icon_map.png')
         .then((value) {
       pinicon = value;
     });
@@ -99,32 +93,23 @@ class _MapdriverState extends State<Mapdriver> {
           Map<String, dynamic> data = myMockDoc.docs[i].data();
           var lat = double.parse(data['lat']);
           var lng = double.parse(data['lng']);
-          LatLng latLngPositionDriver = LatLng(lat, lng);
+          LatLng latLngPositionUser = LatLng(lat, lng);
           var userID = myMockDoc.docs[i].id;
           final MarkerId markerId = MarkerId(userID);
           Marker userPlace = Marker(
-            
             icon: pinicon,
-            position: latLngPositionDriver,
+            position: latLngPositionUser,
             markerId: markerId,
           );
           setState(() {
             markersSet.add(userPlace);
           });
           print('////////////////////////////////////' +
-              latLngPositionDriver.toString());
-          //initMarker(latLngPositionDriver, myMockDoc.docs[i].id);
+              latLngPositionUser.toString());
         }
       }
     });
   }
-
-  // void mapCreated(controller){
-  //   setState(() {
-  //     _controller = controller;
-  //   });
-  // }
-  //
 
   /* Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
 
@@ -164,10 +149,10 @@ class _MapdriverState extends State<Mapdriver> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      /* appBar: AppBar(
           //backgroundColor: Colors.grey.shade100,
           //actions: <Widget>[showlocate()],
-          ),
+          ), */
       /* drawer: Container(
         color: Colors.white,
         width: 255,
@@ -240,7 +225,7 @@ class _MapdriverState extends State<Mapdriver> {
       right: 0,
       bottom: 0,
       child: Container(
-        height: 170.0,
+        height: 100.0,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.only(
@@ -580,7 +565,7 @@ class _MapdriverState extends State<Mapdriver> {
         _controllerGoogleMap.complete(controller);
         newGoogleMapController = controller;
         setState(() {
-          bottomPaddingOfMap = 230;
+          bottomPaddingOfMap = 160;
         });
         locatePosition();
       },
@@ -641,8 +626,10 @@ class _MapdriverState extends State<Mapdriver> {
                       _openlocation = value;
                       if (_openlocation == true) {
                         setdata();
+                        getMarkerData();
                       } else {
                         deletedata();
+                        markersSet.clear();
                       }
                     });
                   },
@@ -724,16 +711,17 @@ class _MapdriverState extends State<Mapdriver> {
     setState(() {
       var type = documentSnapshot['type'];
       var cartype = documentSnapshot['cartype'];
-      GeoFirePoint point =
-          //geo.point(latitude: 0, longitude: 0);
-          geo.point(latitude: position.latitude, longitude: position.longitude);
+
       if ('$type' == 'driver') {
         firebaseFirestore
             .collection('location')
             .doc('$type')
             .collection('$cartype')
             .doc('$user_uid')
-            .update({'geo': point.data});
+            .update({
+          'lat': '${position.latitude}',
+          'lng': '${position.longitude}'
+        });
       }
     });
   }
