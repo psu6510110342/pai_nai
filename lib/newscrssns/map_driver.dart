@@ -3,12 +3,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:pai_nai/Assistants/assistantsMethods.dart';
 import 'package:pai_nai/newscrssns/setting.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:geoflutterfire/geoflutterfire.dart';
+import 'package:pai_nai/newscrssns/setting_driver.dart';
 
 class Mapdriver extends StatefulWidget {
   static const String idScreen = 'mapDriver';
@@ -227,12 +229,12 @@ class _MapdriverState extends State<Mapdriver> {
       child: Container(
         height: 100.0,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: HexColor("#29557a"),
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(18), topRight: Radius.circular(18)),
           boxShadow: [
             BoxShadow(
-              color: Colors.black,
+              color: HexColor("#29557a"),
               blurRadius: 16,
               spreadRadius: 0.5,
               offset: Offset(0.7, 0.7),
@@ -286,7 +288,8 @@ class _MapdriverState extends State<Mapdriver> {
                         onPressed: () {
                           MaterialPageRoute materialPageRoute =
                               MaterialPageRoute(
-                                  builder: (BuildContext context) => Setting());
+                                  builder: (BuildContext context) =>
+                                      SettingDriver());
                           Navigator.of(context)
                               .pushReplacement(materialPageRoute);
                         })
@@ -478,12 +481,18 @@ class _MapdriverState extends State<Mapdriver> {
     var lati = '${position.latitude}';
     var lngi = '${position.longitude}';
     var plate = documentSnapshot['driverPlate'];
+    int count = 0;
     firebaseFirestore
         .collection('location')
         .doc('$type')
         .collection('$cartype')
         .doc(user_uid)
-        .set({'lat': '$lati', 'lng': '$lngi', 'driverPlate': '$plate'});
+        .set({
+      'lat': '$lati',
+      'lng': '$lngi',
+      'driverPlate': '$plate',
+      'count': '$count',
+    });
     setState(() {
       /* GeoFirePoint point =
           geo.point(latitude: position.latitude, longitude: position.longitude);
@@ -494,7 +503,11 @@ class _MapdriverState extends State<Mapdriver> {
             .doc('$type')
             .collection('$cartype')
             .doc(user_uid)
-            .update({'lat': '$lati', 'lng': '$lngi', 'driverPlate': '$plate'});
+            .update({
+          'lat': '$lati',
+          'lng': '$lngi',
+          'driverPlate': '$plate',
+        });
       }
       // else if ('$type' == 'user') {
       //   firebaseFirestore
@@ -601,12 +614,12 @@ class _MapdriverState extends State<Mapdriver> {
         child: Container(
           height: 160.0,
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: HexColor("#29557a"),
             borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(18), topRight: Radius.circular(18)),
             boxShadow: [
               BoxShadow(
-                color: Colors.black,
+                color: HexColor("#29557a"),
                 blurRadius: 16,
                 spreadRadius: 0.5,
                 offset: Offset(0.7, 0.7),
@@ -619,7 +632,10 @@ class _MapdriverState extends State<Mapdriver> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SwitchListTile(
-                  title: Text('เปิดตำแหน่งของท่าน'),
+                  title: Text(
+                    'เปิดตำแหน่งของท่าน',
+                    style: TextStyle(color: Colors.white),
+                  ),
                   value: _openlocation,
                   onChanged: (bool value) {
                     setState(() {
@@ -633,7 +649,7 @@ class _MapdriverState extends State<Mapdriver> {
                       }
                     });
                   },
-                  activeColor: Colors.indigo.shade900,
+                  activeColor: HexColor("#eb5844"),
                   inactiveTrackColor: Colors.grey.shade200,
                   controlAffinity: ListTileControlAffinity.leading,
                 ),
@@ -649,7 +665,7 @@ class _MapdriverState extends State<Mapdriver> {
                       BoxShadow(
                         offset: Offset(0, -10),
                         blurRadius: 35,
-                        color: Colors.white.withOpacity(0.38),
+                        color: HexColor("#29557a"),
                       ),
                     ],
                   ),
@@ -659,17 +675,20 @@ class _MapdriverState extends State<Mapdriver> {
                       IconButton(
                           icon: Icon(
                             Icons.home,
-                            color: Colors.indigo.shade900,
+                            color: HexColor("#eb5844"),
                             size: 28.0,
                           ),
                           onPressed: () {}),
                       IconButton(
-                          icon: Icon(Icons.account_circle),
+                          icon: Icon(
+                            Icons.account_circle,
+                            color: Colors.white,
+                          ),
                           onPressed: () {
                             MaterialPageRoute materialPageRoute =
                                 MaterialPageRoute(
                                     builder: (BuildContext context) =>
-                                        Setting());
+                                        SettingDriver());
                             Navigator.of(context)
                                 .pushReplacement(materialPageRoute);
                           })
@@ -770,7 +789,7 @@ class Bottomnavbar extends StatelessWidget {
           BoxShadow(
             offset: Offset(0, -10),
             blurRadius: 35,
-            color: Colors.white.withOpacity(0.38),
+            color: HexColor("#29557a"),
           ),
         ],
       ),

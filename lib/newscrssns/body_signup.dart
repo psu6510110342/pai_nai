@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:geoflutterfire/geoflutterfire.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:pai_nai/decoration/constants.dart';
 import 'package:pai_nai/decoration/mystyle.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -56,6 +57,7 @@ class _BodysignupState extends State<Bodysignup> {
         FirebaseFirestore.instance.collection('profile').doc(documentID);
 
     // Call the user's CollectionReference to add a new user
+
     return await users
         .set(
           {
@@ -64,7 +66,6 @@ class _BodysignupState extends State<Bodysignup> {
             'type': typeString,
             'cartype': cartypeString,
             'driverPlate': driverPlate,
-            // 'language': 'english'
           },
         ) //{ merge: true }
         .then((value) => print("User Added"))
@@ -92,16 +93,15 @@ class _BodysignupState extends State<Bodysignup> {
         desiredAccuracy: LocationAccuracy.high);
     var lati = position.latitude;
     var lngi = position.longitude;
+    int count = 0;
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     if (user != null) {
       user.updateProfile(displayName: nameString);
       GeoFirePoint pointuser = geo.point(latitude: 0, longitude: 0);
       if (type == 'user') {
-        var locate = firebaseFirestore
-            .collection('location_user')
-            .doc('$user_uid');
+        var locate =
+            firebaseFirestore.collection('location_user').doc('$user_uid');
         locate.set({
-          
           'lat': '$lati',
           'lng': '$lngi',
           'way': 'null',
@@ -111,7 +111,7 @@ class _BodysignupState extends State<Bodysignup> {
         Navigator.of(context).pushAndRemoveUntil(
             materialPageRoute, (Route<dynamic> route) => false);
       }
-      
+
       if (type == 'driver') {
         var locate = firebaseFirestore
             .collection('location')
@@ -121,8 +121,8 @@ class _BodysignupState extends State<Bodysignup> {
         locate.set({
           'lat': '$lati',
           'lng': '$lngi',
-          'driverplte': '$driverPlate',
-          'count': 0
+          'driverPlate': '$driverPlate',
+          'count': '$count'
         });
         MaterialPageRoute materialPageRoute =
             MaterialPageRoute(builder: (BuildContext context) => Mapdriver());
@@ -322,17 +322,17 @@ class _BodysignupState extends State<Bodysignup> {
 
   Widget nameText() {
     return TextFormField(
-      style: TextStyle(color: MyStyle().indigo900_color),
+      style: TextStyle(color: HexColor("#29557a")),
       decoration: InputDecoration(
           icon: Icon(
             Icons.face,
-            color: MyStyle().indigo900_color,
+            color: HexColor("#29557a"),
             size: 32.0,
           ),
           labelText: 'Name',
-          labelStyle: TextStyle(color: MyStyle().indigo900_color),
+          labelStyle: TextStyle(color: HexColor("#29557a")),
           helperText: 'PUT YOUR NAME',
-          helperStyle: TextStyle(color: MyStyle().indigo900_color)),
+          helperStyle: TextStyle(color: HexColor("#29557a"))),
       validator: (String value) {
         if (value.isEmpty) {
           return 'Please Enter Your Name';
@@ -348,17 +348,17 @@ class _BodysignupState extends State<Bodysignup> {
 
   Widget userText() {
     return TextFormField(
-      style: TextStyle(color: MyStyle().indigo900_color),
+      style: TextStyle(color: HexColor("#29557a")),
       decoration: InputDecoration(
           icon: Icon(
             Icons.person,
-            color: MyStyle().indigo900_color,
+            color: HexColor("#29557a"),
             size: 32.0,
           ),
           labelText: 'UserName',
-          labelStyle: TextStyle(color: MyStyle().indigo900_color),
+          labelStyle: TextStyle(color: HexColor("#29557a")),
           helperText: 'PUT YOUR USERNAME',
-          helperStyle: TextStyle(color: MyStyle().indigo900_color)),
+          helperStyle: TextStyle(color: HexColor("#29557a"))),
       validator: (String value) {
         if (value.isEmpty) {
           return 'Please Enter Your Username';
@@ -375,17 +375,17 @@ class _BodysignupState extends State<Bodysignup> {
   Widget passwordText() {
     return TextFormField(
       keyboardType: TextInputType.number,
-      style: TextStyle(color: MyStyle().indigo900_color),
+      style: TextStyle(color: HexColor("#29557a")),
       decoration: InputDecoration(
           icon: Icon(
             Icons.lock,
-            color: MyStyle().indigo900_color,
+            color: HexColor("#29557a"),
             size: 32.0,
           ),
           labelText: 'Password',
-          labelStyle: TextStyle(color: MyStyle().indigo900_color),
+          labelStyle: TextStyle(color: HexColor("#29557a")),
           helperText: 'PUT YOUR PASSWORD MORE 6',
-          helperStyle: TextStyle(color: MyStyle().indigo900_color)),
+          helperStyle: TextStyle(color: HexColor("#29557a"))),
       validator: (String value) {
         if (value.isEmpty) {
           return 'Please Enter Your PassWord';
@@ -404,17 +404,17 @@ class _BodysignupState extends State<Bodysignup> {
   Widget emailText() {
     return TextFormField(
       keyboardType: TextInputType.emailAddress,
-      style: TextStyle(color: MyStyle().indigo900_color),
+      style: TextStyle(color: HexColor("#29557a")),
       decoration: InputDecoration(
           icon: Icon(
             Icons.mail,
-            color: MyStyle().indigo900_color,
+            color: HexColor("#29557a"),
             size: 32.0,
           ),
           labelText: 'Email',
-          labelStyle: TextStyle(color: MyStyle().indigo900_color),
+          labelStyle: TextStyle(color: HexColor("#29557a")),
           helperText: 'PUT YOUR EMAIL',
-          helperStyle: TextStyle(color: MyStyle().indigo900_color)),
+          helperStyle: TextStyle(color: HexColor("#29557a"))),
       validator: (String value) {
         if (value.isEmpty) {
           return 'Please Enter Your Email';
@@ -460,7 +460,7 @@ class _BodysignupState extends State<Bodysignup> {
                     });
                   },
                 ),
-                Text('User', style: TextStyle(color: MyStyle().indigo900_color))
+                Text('User', style: TextStyle(color: HexColor("#29557a")))
               ],
             ),
           ),
@@ -482,8 +482,7 @@ class _BodysignupState extends State<Bodysignup> {
                     });
                   },
                 ),
-                Text('Driver',
-                    style: TextStyle(color: MyStyle().indigo900_color))
+                Text('Driver', style: TextStyle(color: HexColor("#29557a")))
               ],
             ),
           ),
@@ -498,8 +497,8 @@ class _BodysignupState extends State<Bodysignup> {
           children: <Widget>[
             driverplate(),
             SizedBox(
-                      height: 10.0,
-                    ),
+              height: 10.0,
+            ),
             dropdown(),
             //drop(),
             SizedBox(
@@ -517,17 +516,17 @@ class _BodysignupState extends State<Bodysignup> {
   Widget driverplate() {
     return TextFormField(
       keyboardType: TextInputType.text,
-      style: TextStyle(color: MyStyle().indigo900_color),
+      style: TextStyle(color: HexColor("#29557a")),
       decoration: InputDecoration(
           icon: Icon(
             Icons.subtitles_outlined,
-            color: MyStyle().indigo900_color,
+            color: HexColor("#29557a"),
             size: 32.0,
           ),
           labelText: 'Number Plate',
-          labelStyle: TextStyle(color: MyStyle().indigo900_color),
+          labelStyle: TextStyle(color: HexColor("#29557a")),
           helperText: 'EXAMPLE  กก-0000',
-          helperStyle: TextStyle(color: MyStyle().indigo900_color)),
+          helperStyle: TextStyle(color: HexColor("#29557a"))),
       validator: (String value) {
         if (value.isEmpty) {
           return 'Please Enter Your Plate';
@@ -549,7 +548,7 @@ class _BodysignupState extends State<Bodysignup> {
         Text(
           'Your Car\'s Type',
           style: TextStyle(
-              color: MyStyle().indigo900_color, fontWeight: FontWeight.w900),
+              color: HexColor("#29557a"), fontWeight: FontWeight.w900),
         ),
         SizedBox(
           width: 12.0,
@@ -609,7 +608,7 @@ class _BodysignupState extends State<Bodysignup> {
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(80.0)),
         padding: EdgeInsets.all(0.0),
-        color: Colors.indigo,
+        color: HexColor("#29557a"),
         child: Container(
           constraints: BoxConstraints(maxWidth: 250.0, minHeight: 50.0),
           alignment: Alignment.center,
@@ -653,7 +652,7 @@ class _BodysignupState extends State<Bodysignup> {
                         Text(
                           'Please Choose Type',
                           style: TextStyle(
-                              color: MyStyle().indigo900_color,
+                              color: HexColor("#29557a"),
                               fontWeight: FontWeight.bold,
                               fontSize: 15.0),
                         ),
@@ -664,7 +663,7 @@ class _BodysignupState extends State<Bodysignup> {
                     ),
                     userradio(),
                     driverradio(),
-                    
+
                     driver_data(),
                     SizedBox(
                       height: 30.0,

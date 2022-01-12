@@ -6,7 +6,6 @@ import 'package:flutter/rendering.dart';
 //import 'package:pai_nai/screens/map.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:pai_nai/newscreens_2/home_screen.dart';
 import 'package:pai_nai/newscrssns/home.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 //import 'package:translator/translator.dart';
@@ -14,12 +13,12 @@ import 'package:pai_nai/newscrssns/app_localizations.dart';
 import 'package:pai_nai/newscrssns/map_driver.dart';
 import 'package:pai_nai/screens/mainscreen.dart';
 
-class Setting extends StatefulWidget {
+class SettingDriver extends StatefulWidget {
   @override
-  _SettingState createState() => _SettingState();
+  _SettingDriverState createState() => _SettingDriverState();
 }
 
-class _SettingState extends State<Setting> {
+class _SettingDriverState extends State<SettingDriver> {
   List<bool> isSelected;
   // PickedFile file;
   String name, email, type, text;
@@ -186,8 +185,8 @@ class _SettingState extends State<Setting> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Text(
-                'Setting',
-                // AppLocalizations.of(context).translate('Setting'),
+                'SettingDriver',
+                // AppLocalizations.of(context).translate('SettingDriver'),
                 style: TextStyle(
                     fontSize: 21,
                     fontWeight: FontWeight.bold,
@@ -475,32 +474,14 @@ class Bottomnavbar extends StatelessWidget {
           IconButton(
               icon: Icon(
                 Icons.home,
-                color: HexColor("#29557a"),
               ),
               onPressed: () {
                 MaterialPageRoute materialPageRoute = MaterialPageRoute(
-                    builder: (BuildContext context) => MainScreen());
+                    builder: (BuildContext context) => Mapdriver());
                 Navigator.of(context).pushReplacement(materialPageRoute);
 
                 //pushReplacement มีไว้เพื่อไม่ให้มีarrow back คือลบหน้าเก่าแล้วแสดงหน้าใหม่เลย
               }),
-          SizedBox(
-            width: 50,
-          ),
-          IconButton(
-              icon: Icon(
-                Icons.beach_access_rounded,
-                color: HexColor("#29557a"),
-                size: 28.0,
-              ),
-              onPressed: () {
-                MaterialPageRoute materialPageRoute = MaterialPageRoute(
-                    builder: (BuildContext context) => Homescreen());
-                Navigator.of(context).pushReplacement(materialPageRoute);
-              }),
-          SizedBox(
-            width: 50,
-          ),
           IconButton(
               icon: Icon(
                 Icons.account_circle,

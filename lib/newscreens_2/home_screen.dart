@@ -10,6 +10,7 @@ import 'package:pai_nai/newscreens_2/newdestination_screen .dart';
 import 'package:pai_nai/newscreens_2/popular_screen .dart';
 import 'package:pai_nai/newscreens_2/temple_screen.dart';
 import 'package:pai_nai/newscreens_2/recommend_screen.Dart';
+import 'package:pai_nai/screens/mainscreen.dart';
 
 class Homescreen extends StatefulWidget {
   static const String idScreen = 'tourist';
@@ -38,34 +39,44 @@ class _HomescreenState extends State<Homescreen> with TickerProviderStateMixin {
             physics: BouncingScrollPhysics(),
             children: <Widget>[
               // Custom Navigation
+
               Container(
                 height: 50,
                 margin: EdgeInsets.only(top: 28.8, left: 28.8, right: 28.8),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Container(
-                      height: 45,
-                      width: 45,
-                      padding: EdgeInsets.all(14),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(10),
-                            topRight: Radius.circular(10),
-                            bottomLeft: Radius.circular(10),
-                            bottomRight: Radius.circular(10)),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.1),
-                            spreadRadius: 1,
-                            blurRadius: 2,
-                            offset: Offset(0, 1), // changes position of shadow
-                          )
-                        ],
-                        color: Color(0x080a0928),
+                    GestureDetector(
+                      onTap: () {
+                        MaterialPageRoute materialPageRoute = MaterialPageRoute(
+                            builder: (BuildContext context) => MainScreen());
+                        Navigator.of(context)
+                            .pushReplacement(materialPageRoute);
+                      },
+                      child: Container(
+                        height: 45,
+                        width: 45,
+                        padding: EdgeInsets.all(14),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(10),
+                              topRight: Radius.circular(10),
+                              bottomLeft: Radius.circular(10),
+                              bottomRight: Radius.circular(10)),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.1),
+                              spreadRadius: 1,
+                              blurRadius: 2,
+                              offset:
+                                  Offset(0, 1), // changes position of shadow
+                            )
+                          ],
+                          color: Color(0x080a0928),
+                        ),
+                        child: Icon(Icons.arrow_back),
+                        //SvgPicture.asset('assets/svg/arrow.svg'),
                       ),
-                      child: Icon(Icons.arrow_back),
-                      //SvgPicture.asset('assets/svg/arrow.svg'),
                     ),
                   ],
                 ),

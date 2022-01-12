@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:http/http.dart';
 import 'package:pai_nai/Assistants/requestAssistant.dart';
 import 'package:pai_nai/DataHandler/appData.dart';
@@ -29,10 +30,13 @@ class _SearchScreensState extends State<SearchScreens> {
           Container(
             height: 215,
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: HexColor("#29557a"),
+              borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(18),
+                      bottomRight: Radius.circular(18)),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black,
+                  color: Colors.white,
                   blurRadius: 6,
                   spreadRadius: 0.5,
                   offset: Offset(0.7, 0.7),
@@ -45,7 +49,7 @@ class _SearchScreensState extends State<SearchScreens> {
               child: Column(
                 children: [
                   SizedBox(
-                    height: 5,
+                    height: 20,
                   ),
                   Stack(
                     children: [
@@ -53,33 +57,36 @@ class _SearchScreensState extends State<SearchScreens> {
                           onTap: () {
                             Navigator.pop(context);
                           },
-                          child: Icon(Icons.arrow_back)),
+                          child: Icon(Icons.arrow_back_ios,color: Colors.white,)),
                       Center(
                         child: Text(
                           'Set Drop Off',
                           style:
-                              TextStyle(fontSize: 18, fontFamily: 'Brand-Bold'),
+                              TextStyle(fontSize: 18, fontFamily: 'Brand-Bold',color: Colors.white),
+                              
                         ),
                       ),
                     ],
                   ),
                   SizedBox(
-                    height: 5,
+                    height: 20,
                   ),
                   Row(
                     children: [
-                      Image.asset(
+                      Icon(Icons.account_circle,color: Colors.white,),
+                      /* Image.asset(
                         'images/pickicon.png',
-                        height: 16,
-                        width: 16,
-                      ),
+                        height: 20,
+                        width: 20,
+                        //color: Colors.white,
+                      ), */
                       SizedBox(
-                        width: 18,
+                        width: 20,
                       ),
                       Expanded(
                           child: Container(
                         decoration: BoxDecoration(
-                          color: Colors.grey,
+                          color: Colors.white,
                           borderRadius: BorderRadius.circular(5),
                         ),
                         child: TextField(
@@ -89,7 +96,7 @@ class _SearchScreensState extends State<SearchScreens> {
                           controller: pickUpTextEditingController,
                           decoration: InputDecoration(
                             hintText: 'PickUp Location',
-                            fillColor: Colors.grey,
+                            fillColor: Colors.white,
                             filled: true,
                             border: InputBorder.none,
                             isDense: true,
@@ -101,22 +108,23 @@ class _SearchScreensState extends State<SearchScreens> {
                     ],
                   ),
                   SizedBox(
-                    height: 5,
+                    height: 20,
                   ),
                   Row(
                     children: [
-                      Image.asset(
+                      Icon(Icons.pin_drop,color: Colors.white,),
+                      /* Image.asset(
                         'images/desticon.png',
-                        height: 16,
-                        width: 16,
-                      ),
+                        height: 20,
+                        width: 20,
+                      ), */
                       SizedBox(
-                        width: 18,
+                        width: 20,
                       ),
                       Expanded(
                           child: Container(
                         decoration: BoxDecoration(
-                          color: Colors.grey,
+                          color: Colors.white,
                           borderRadius: BorderRadius.circular(5),
                         ),
                         child: TextField(
@@ -126,7 +134,7 @@ class _SearchScreensState extends State<SearchScreens> {
                           controller: dropOffTextEditingController,
                           decoration: InputDecoration(
                             hintText: 'Where to?',
-                            fillColor: Colors.grey,
+                            fillColor: Colors.white,
                             filled: true,
                             border: InputBorder.none,
                             isDense: true,
@@ -209,7 +217,7 @@ class PredictionTile extends StatelessWidget {
             ),
             Row(
               children: [
-                Icon(Icons.add_location),
+                Icon(Icons.add_location,color: HexColor("#29557a"),),
                 SizedBox(
                   width: 14,
                 ),
@@ -220,7 +228,7 @@ class PredictionTile extends StatelessWidget {
                       Text(
                         placePredictions.main_text.toString(),
                         overflow: TextOverflow.ellipsis,
-                        style: TextStyle(fontSize: 16,color: Colors.black),
+                        style: TextStyle(fontSize: 16,color: HexColor("#29557a")),
                       ),
                       SizedBox(
                         height: 3,
@@ -228,7 +236,7 @@ class PredictionTile extends StatelessWidget {
                       Text(
                         placePredictions.secondary_text.toString(),
                         overflow: TextOverflow.ellipsis,
-                        style: TextStyle(fontSize: 12, color: Colors.grey),
+                        style: TextStyle(fontSize: 12, color: Colors.black),
                       ),
                     ],
                   ),

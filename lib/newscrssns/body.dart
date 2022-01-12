@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:pai_nai/newscrssns/head_box.dart';
-import 'package:pai_nai/decoration/mystyle.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:pai_nai/screens/mainscreen.dart';
 import 'package:pai_nai/newscrssns/app_localizations.dart';
@@ -11,7 +11,6 @@ import 'package:pai_nai/newscrssns/map_driver.dart';
 
 class Body extends StatefulWidget {
   @override
-  
   _BodyState createState() => _BodyState();
 }
 
@@ -58,10 +57,10 @@ class _BodyState extends State<Body> {
             icon: Icon(
               Icons.email_outlined,
               size: 33.0,
-              color: MyStyle().indigo900_color,
+              color: HexColor("#29557a"),
             ),
             labelText: AppLocalizations.of(context).translate('Email'),
-            labelStyle: TextStyle(color: MyStyle().indigo900_color)),
+            labelStyle: TextStyle(color: HexColor("#29557a"))),
         onSaved: (String value) {
           emailString = value.trim();
         },
@@ -78,10 +77,10 @@ class _BodyState extends State<Body> {
             icon: Icon(
               Icons.lock_outline,
               size: 33.0,
-              color: MyStyle().indigo900_color,
+              color: HexColor("#29557a"),
             ),
             labelText: AppLocalizations.of(context).translate('Password'),
-            labelStyle: TextStyle(color: MyStyle().indigo900_color)),
+            labelStyle: TextStyle(color: HexColor("#29557a"))),
         onSaved: (String value) {
           passwordString = value.trim();
         },
@@ -192,7 +191,7 @@ class _BodyState extends State<Body> {
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(80.0)),
               padding: EdgeInsets.all(0.0),
-              color: Colors.indigo,
+              color: HexColor("#29557a"),
               child: Container(
                 constraints: BoxConstraints(maxWidth: 250.0, minHeight: 50.0),
                 alignment: Alignment.center,

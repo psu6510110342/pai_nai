@@ -2,47 +2,145 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dropdownfield/dropdownfield.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:hexcolor/hexcolor.dart';
+import 'package:pai_nai/main.dart';
+import 'package:pai_nai/screens/finishBlue.dart';
+import 'package:pai_nai/screens/finishBrown.dart';
 import 'package:pai_nai/screens/mainscreen.dart';
 
 class Cashpage extends StatefulWidget {
+  final String markerId;
+  final colorWay;
+  final int count;
+  final plate;
+  Cashpage({Key key, this.markerId, this.colorWay, this.plate, this.count})
+      : super(key: key);
   @override
   _CashpageState createState() => _CashpageState();
 }
 
 class _CashpageState extends State<Cashpage> {
   int _n = 0;
+  int count_num;
+
+  String uid;
+
+  var color;
+  var plate_car;
+  int cnum;
+
+  @override
+  void initState() {
+    super.initState();
+    uid = widget.markerId;
+    color = widget.colorWay;
+    plate_car = widget.plate;
+    count_num = widget.count;
+    cnum = widget.count;
+  }
 
   void minus() {
     setState(() {
-      if (_n != 0) _n--;
+      if (_n != 0) {
+        _n--;
+        count_num = count_num - 1;
+      }
     });
   }
 
   void add() {
     setState(() {
-      _n++;
+      _n = _n + 1;
+      count_num = count_num + 1;
+      if (count_num == 8) {
+        myAlertcount();
+      } else if (count_num > 8) {
+        _n--;
+        myAlertcount();
+      }
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
+    return Scaffold(
         body: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+              width: 20,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'ป้ายทะเบียน',
+                  style: TextStyle(
+                    color: HexColor('#29557a'),
+                    fontSize: 22.0,
+                  ),
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                Text(
+                  '$plate_car',
+                  style: TextStyle(
+                    fontSize: 20.0,
+                    color: HexColor("#eb5844"),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'จำนวนผู้ใช้บริการในขณะนี้',
+                  style: TextStyle(
+                    fontSize: 17.0,
+                    color: HexColor('#29557a'),
+                  ),
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                Text(
+                  '$cnum',
+                  style: TextStyle(
+                    fontSize: 20.0,
+                    color: HexColor("#eb5844"),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+        SizedBox(
+          height: 20,
+        ),
         Text(
           'จำนวนบุคคลที่ต้องการใช้บริการ',
-          style: TextStyle(color: Colors.lightBlue.shade900),
+          style: TextStyle(color: HexColor('#29557a'), fontSize: 15.0),
         ),
-        SizedBox(height : 5.0),
+        SizedBox(height: 5.0),
         count(),
         Text(
           'ช่องทางการจ่ายเงิน',
-          style: TextStyle(color: Colors.lightBlue.shade900),
+          style: TextStyle(color: HexColor('#29557a'), fontSize: 15.0),
         ),
-        SizedBox(height : 5.0),
-        dropdown()
+        SizedBox(height: 5.0),
+        dropdown(),
+        SizedBox(height: 8.0),
+        button(),
       ],
     ));
   }
@@ -55,21 +153,26 @@ class _CashpageState extends State<Cashpage> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
             FloatingActionButton(
+              heroTag: 'btn1',
+              onPressed: minus,
+              child: new Icon(
+                Icons.remove_rounded,
+                color: Colors.black,
+              ),
+              backgroundColor: Colors.white,
+            ),
+            SizedBox(width: 10.0),
+            Text('$_n',
+                style:
+                    new TextStyle(fontSize: 60.0, color: Colors.blue.shade900)),
+            SizedBox(width: 10.0),
+            FloatingActionButton(
+              heroTag: 'btn2',
               onPressed: add,
               child: new Icon(
                 Icons.add,
                 color: Colors.black,
               ),
-              backgroundColor: Colors.white,
-            ),
-            Text('$_n',
-                style:
-                    new TextStyle(fontSize: 60.0, color: Colors.blue.shade900)),
-            FloatingActionButton(
-              onPressed: minus,
-              child: new Icon(
-                  const IconData(0xe15b, fontFamily: 'MaterialIcons'),
-                  color: Colors.black),
               backgroundColor: Colors.white,
             ),
           ],
@@ -82,15 +185,15 @@ class _CashpageState extends State<Cashpage> {
 //add dropdownfield: ^1.0.3 in .yaml
   Widget dropdown() {
     return Container(
-      height: MediaQuery.of(context).size.height,
-      width: MediaQuery.of(context).size.width,
-      padding: EdgeInsets.all(20.0),
+      // height: MediaQuery.of(context).size.height,
+      // width: MediaQuery.of(context).size.width,
+      padding: EdgeInsets.all(30.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          Text('....'),
-          SizedBox(height: 10.0),
+          // Text('....'),
+          SizedBox(height: 5.0),
           DropDownField(
             controller: payment,
             hintText: "Please choose payment way",
@@ -103,7 +206,7 @@ class _CashpageState extends State<Cashpage> {
               });
             },
           ),
-          SizedBox(height: 10.0),
+          SizedBox(height: 20.0),
           Text(
             selectpayment,
             textAlign: TextAlign.center,
@@ -114,54 +217,50 @@ class _CashpageState extends State<Cashpage> {
   }
 
   Widget button() {
-    return GestureDetector(
-      onTap: () {
-        db_count();
-
-        MaterialPageRoute materialPageRoute =
-            MaterialPageRoute(builder: (BuildContext context) => MainScreen());
-        Navigator.of(context).pushReplacement(materialPageRoute);
-      },
-      child: Container(
-        width: 200,
-        height: 50,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(50),
-          color: Colors.blue.shade900,
-        ),
-        child: Center(child: Text('Confirm!')),
-      ),
-    );
+    return RaisedButton(
+        onPressed: () {
+          db_count();
+          //count_num = count_num + _n;
+          if ('$color' == 'สายสีน้ำเงิน') {
+            MaterialPageRoute materialPageRoute = MaterialPageRoute(
+                builder: (BuildContext context) => FinishBlue(
+                      number: _n,
+                      driveruid: uid,
+                      count: count_num,
+                    ));
+            Navigator.of(context).pushReplacement(materialPageRoute);
+          } else if ('$color' == 'สายสีน้ำตาลแดง') {
+            MaterialPageRoute materialPageRoute = MaterialPageRoute(
+                builder: (BuildContext context) => FinishBrown(
+                      number: _n,
+                      driveruid: uid,
+                      count: count_num,
+                    ));
+            Navigator.of(context).pushReplacement(materialPageRoute);
+          }
+        },
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(60.0)),
+        color: HexColor('#29557a'),
+        child: Container(
+            constraints: BoxConstraints(maxWidth: 250.0, minHeight: 50.0),
+            alignment: Alignment.center,
+            child: Text(
+              "Confirm!",
+              textAlign: TextAlign.center,
+              style: TextStyle(color: HexColor('#ffffff'), fontSize: 15),
+            )));
   }
 
   Future<void> db_count() async {
+    //count_num = count_num + _n;
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-    FirebaseAuth firebaseAuth = FirebaseAuth.instance;
-    var user_uid = firebaseAuth.currentUser.uid;
-    DocumentSnapshot documentSnapshot;
-    await FirebaseFirestore.instance
-        .collection('profile')
-        .doc('$user_uid')
-        .get()
-        .then((value) {
-      documentSnapshot = value;
-      setState(() {
-        var type = documentSnapshot['type'];
-        var cartype = documentSnapshot['cartype'];
-        int count = documentSnapshot['count'];
-        int num = count + _n;
-        if (num <= 8) {
-          firebaseFirestore
-              .collection('location')
-              .doc('$cartype')
-              .collection('$type')
-              .doc(user_uid)
-              .update({'count': '$num'});
-        } else {
-          myAlertcount();
-        }
-      });
-    });
+    await firebaseFirestore
+        .collection('location')
+        .doc('driver')
+        .collection('$color')
+        .doc('$uid')
+        .update({'count': '$count_num'});
   }
 
   void myAlertcount() {
@@ -202,4 +301,4 @@ class _CashpageState extends State<Cashpage> {
 final payment = TextEditingController();
 String selectpayment = "";
 
-List<String> pay = ["cash", "bank"];
+List<String> pay = ["cash", "bank", "paypal"];

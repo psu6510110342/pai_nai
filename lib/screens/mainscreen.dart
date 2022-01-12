@@ -7,10 +7,12 @@ import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:pai_nai/Assistants/assistantsMethods.dart';
 import 'package:pai_nai/DataHandler/appData.dart';
 import 'package:pai_nai/Models/directDetails.dart';
 import 'package:pai_nai/newscreens_2/home_screen.dart';
+import 'package:pai_nai/newscrssns/cashpage.dart';
 //import 'package:pai_nai/newscreens_2/home_screen.dart';
 import 'package:pai_nai/newscrssns/setting.dart';
 import 'package:pai_nai/screens/sraechScreen.dart';
@@ -28,6 +30,7 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
   List<LatLng> pLineCoordinates = [];
   Set<Polyline> polylineSet = {};
+  BuildContext _mycontext;
 
   DirectionDetails tripDirectionDetails; //
   bool drawOpen = true;
@@ -35,9 +38,9 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
   resetApp() {
     setState(() {
       drawOpen = true;
-      searchContainerHeight = 215;
+      searchContainerHeight = 200;
       rideDetailContainerHeight = 0;
-      bottomPaddingOfMap = 230;
+      bottomPaddingOfMap = 205;
       carOutHeight = 0;
 
       polylineSet.clear();
@@ -60,7 +63,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
   Set<Circle> circlesSet = {};
 
   double rideDetailContainerHeight = 0;
-  double searchContainerHeight = 215;
+  double searchContainerHeight = 200;
   double carOutHeight = 0;
 
   void displayRideDetailsContainer() async {
@@ -68,8 +71,8 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
 
     setState(() {
       searchContainerHeight = 0;
-      rideDetailContainerHeight = 200;
-      bottomPaddingOfMap = 190;
+      rideDetailContainerHeight = 220;
+      bottomPaddingOfMap = 225;
       carOutHeight = 0;
       drawOpen = false;
     });
@@ -83,14 +86,13 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
     setState(() {
       searchContainerHeight = 0;
       rideDetailContainerHeight = 0;
-      bottomPaddingOfMap = 115;
+      bottomPaddingOfMap = 105;
       carOutHeight = 100;
       drawOpen = false;
     });
   }
 
   Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
-
   final FirebaseAuth auth = FirebaseAuth.instance;
 //เอาข้อมูลจาก firebase มาเก็บ
   getMarkerDataBrown() async {
@@ -102,29 +104,37 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
         .then((myMockDoc) {
       if (myMockDoc.docs.isNotEmpty) {
         for (int i = 0; i < myMockDoc.docs.length; i++) {
-          print('-----------------------------------------------' +
-              myMockDoc.docs[i].id.toString());
           Map<String, dynamic> data = myMockDoc.docs[i].data();
           var lat = double.parse(data['lat']);
           var lng = double.parse(data['lng']);
           LatLng latLngPositionDriver = LatLng(lat, lng);
           var userID = myMockDoc.docs[i].id;
           final MarkerId markerId = MarkerId(userID);
-          Marker driverPlace = Marker(
-            infoWindow: InfoWindow(title: data['driverPlate']),
-            icon: pinicon,
-            position: latLngPositionDriver,
-            markerId: markerId,
-            /* onTap: () {
-              
-            }, */
-          );
-          setState(() {
-            markersSet.add(driverPlace);
-          });
-          print('////////////////////////////////////' +
-              latLngPositionDriver.toString());
-          //initMarker(latLngPositionDriver, myMockDoc.docs[i].id);
+          var plate = data['driverPlate'];
+          var count = int.parse(data['count']);
+          if (count < 8) {
+            Marker driverPlace = Marker(
+              infoWindow: InfoWindow(title: data['driverPlate']),
+              icon: pinicon,
+              position: latLngPositionDriver,
+              markerId: markerId,
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Cashpage(
+                        markerId: userID,
+                        colorWay: 'สายสีน้ำตาลแดง',
+                        plate: plate,
+                        count: count,
+                      ),
+                    ));
+              },
+            );
+            setState(() {
+              markersSet.add(driverPlace);
+            });
+          }
         }
       }
     });
@@ -139,57 +149,46 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
         .then((myMockDoc) {
       if (myMockDoc.docs.isNotEmpty) {
         for (int i = 0; i < myMockDoc.docs.length; i++) {
-          print('-----------------------------------------------' +
-              myMockDoc.docs[i].id.toString());
           Map<String, dynamic> data = myMockDoc.docs[i].data();
           var lat = double.parse(data['lat']);
           var lng = double.parse(data['lng']);
           LatLng latLngPositionDriver = LatLng(lat, lng);
           var userID = myMockDoc.docs[i].id;
           final MarkerId markerId = MarkerId(userID);
-          Marker driverPlace = Marker(
-            infoWindow: InfoWindow(title: data['driverPlate']),
-            icon: pinicon,
-            position: latLngPositionDriver,
-            markerId: markerId,
-            /* onTap: () {
-              
-            }, */
-          );
-          setState(() {
-            markersSet.add(driverPlace);
-          });
+          var plate = data['driverPlate'];
+          var count = int.parse(data['count']);
+          print('-----------------------------------------------' +
+              data['driverPlate'].toString());
+          if (count < 8) {
+            Marker driverPlace = Marker(
+              infoWindow: InfoWindow(title: data['driverPlate']),
+              icon: pinicon,
+              position: latLngPositionDriver,
+              markerId: markerId,
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Cashpage(
+                        markerId: userID,
+                        colorWay: 'สายสีน้ำเงิน',
+                        plate: plate,
+                        count: count,
+                      ),
+                    ));
+              },
+            );
+            setState(() {
+              markersSet.add(driverPlace);
+            });
+          }
         }
       }
     });
   }
 
-  void initMarker(specify, specifyId) async {
-    var markerIdVal = specifyId;
-    final MarkerId markerId = MarkerId(markerIdVal);
-    LatLng latLngPosition_2 = LatLng(specify.latitude, specify.longitude);
-    print('==================================================================' +
-        latLngPosition_2.toString());
-    final Marker marker = Marker(
-        markerId: markerId,
-        position: LatLng(specify.latitude, specify.longitude),
-        infoWindow: InfoWindow(title: specify['plate']));
-    setState(() {
-      markersSet.add(marker);
-      //markers[markerId] = marker;
-    });
-    /* setState(() {
-      markers[markerId] = marker;
-    }); */
-  }
-
   void initState() {
     super.initState();
-    //getMarkerData();
-
-    //carstop();
-    //inputData();
-
     BitmapDescriptor.fromAssetImage(
             ImageConfiguration(size: Size(1, 1)), 'images/car_map.png')
         .then((value) {
@@ -258,83 +257,13 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
   }
 
   static final CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(37.42796133580664, -122.085749655962),
+    target: LatLng(7.025432, 100.475299),
     zoom: 14.4746,
   );
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
-      /* appBar: AppBar(
-        title: Text('PAINAI'),
-      ), */
-      /* drawer: Container(
-        color: Colors.white,
-        width: 255,
-        child: Drawer(
-          child: ListView(
-            children: [
-              Container(
-                height: 165,
-                child: DrawerHeader(
-                  decoration: BoxDecoration(color: Colors.white),
-                  child: Row(
-                    children: [
-                      Image.asset(
-                        'images/user_icon.png',
-                        height: 65,
-                        width: 65,
-                      ),
-                      SizedBox(
-                        width: 16,
-                      ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Profile Name',
-                            style: TextStyle(
-                                fontSize: 16, fontFamily: 'Brand-Bold'),
-                          ),
-                          SizedBox(
-                            height: 6,
-                          ),
-                          Text('Visit Profile'),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              DividerWidget(),
-              SizedBox(
-                height: 12,
-              ),
-              ListTile(
-                leading: Icon(Icons.history),
-                title: Text(
-                  'History',
-                  style: TextStyle(fontSize: 15),
-                ),
-              ),
-              ListTile(
-                leading: Icon(Icons.person),
-                title: Text(
-                  'Visit Profile',
-                  style: TextStyle(fontSize: 15),
-                ),
-              ),
-              ListTile(
-                leading: Icon(Icons.info),
-                title: Text(
-                  'About',
-                  style: TextStyle(fontSize: 15),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ), */
       body: Stack(
         children: [
           GoogleMap(
@@ -358,61 +287,6 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
               locatePosition();
             },
           ),
-          /* Positioned(
-            bottom: 50,
-            right: 10,
-            child: FlatButton(
-              child: Icon(Icons.pin_drop, color: Colors.white,),
-              color: Colors.green,
-              onPressed: initMarker(),
-            ),
-          ), */
-          Positioned(
-            top: 38,
-            left: 22,
-            child: GestureDetector(
-              onTap: () async {
-                var res = await Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => Homescreen()));
-                if (res == 'obtainDirection') {
-                  displayRideDetailsContainer();
-                }
-                if (drawOpen) {
-                  scaffoldKey.currentState.openDrawer();
-                }
-                //scaffoldKey.currentState.openDrawer();
-                else {
-                  resetApp();
-                }
-              },
-              child: Container(
-                
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(22),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black,
-                      blurRadius: 6,
-                      spreadRadius: 0.5,
-                      offset: Offset(0.7, 0.7),
-                    ),
-                  ],
-                  
-                ),
-                child: CircleAvatar(
-                  
-                  backgroundColor: Colors.white,
-                  child: Icon(
-                    //Icons.menu,
-                    (drawOpen) ? Icons.menu : Icons.close, //
-                    color: Colors.black,
-                  ),
-                  radius: 20,
-                ),
-              ),
-            ),
-          ),
           Positioned(
             left: 0,
             right: 0,
@@ -424,13 +298,13 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
               child: Container(
                 height: searchContainerHeight,
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: HexColor("#29557a"),
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(18),
                       topRight: Radius.circular(18)),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black,
+                      color: HexColor("#29557a"),
                       blurRadius: 16,
                       spreadRadius: 0.5,
                       offset: Offset(0.7, 0.7),
@@ -448,7 +322,8 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                       ),
                       Text(
                         'Where to?',
-                        style: TextStyle(fontSize: 20),
+                        style:
+                            TextStyle(fontSize: 20, color: HexColor("#ffffff")),
                       ),
                       SizedBox(
                         height: 20,
@@ -467,14 +342,14 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(5),
-                            boxShadow: [
+                            /* boxShadow: [
                               BoxShadow(
-                                color: Colors.black54,
+                                color: HexColor("#29557a"),
                                 blurRadius: 6,
                                 spreadRadius: 0.5,
                                 offset: Offset(0.7, 0.7),
                               ),
-                            ],
+                            ], */
                           ),
                           child: Padding(
                             padding: const EdgeInsets.all(12.0),
@@ -482,7 +357,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                               children: [
                                 Icon(
                                   Icons.search,
-                                  color: Colors.blue,
+                                  color: HexColor("#29557a"),
                                 ),
                                 SizedBox(
                                   width: 10,
@@ -498,14 +373,14 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                       ),
                       Container(
                         padding: EdgeInsets.only(
-                            left: 70.0, right: 70.0, bottom: 2.0),
+                            left: 20.0, right: 20.0, bottom: 2.0),
                         height: 40,
                         decoration: BoxDecoration(
                           boxShadow: [
                             BoxShadow(
                               offset: Offset(0, -10),
                               blurRadius: 35,
-                              color: Colors.white.withOpacity(0.38),
+                              color: HexColor("#29557a"),
                             ),
                           ],
                         ),
@@ -515,12 +390,33 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                             IconButton(
                                 icon: Icon(
                                   Icons.home,
-                                  color: Colors.indigo.shade900,
+                                  color: HexColor("#eb5844"),
                                   size: 28.0,
                                 ),
                                 onPressed: () {}),
+                            SizedBox(
+                              width: 50,
+                            ),
                             IconButton(
-                                icon: Icon(Icons.account_circle),
+                                icon: Icon(
+                                  Icons.beach_access_rounded,
+                                  color: HexColor("#ffffff"),
+                                  size: 28.0,
+                                ),
+                                onPressed: () {
+                                  MaterialPageRoute materialPageRoute =
+                                      MaterialPageRoute(
+                                          builder: (BuildContext context) =>
+                                              Homescreen());
+                                  Navigator.of(context)
+                                      .pushReplacement(materialPageRoute);
+                                }),
+                            SizedBox(
+                              width: 50,
+                            ),
+                            IconButton(
+                                icon: Icon(Icons.account_circle,
+                                    color: HexColor("#ffffff")),
                                 onPressed: () {
                                   MaterialPageRoute materialPageRoute =
                                       MaterialPageRoute(
@@ -532,75 +428,13 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                           ],
                         ),
                       ),
-                      /* Row(
-                        children: [
-                          Icon(
-                            Icons.home,
-                            color: Colors.grey,
-                          ),
-                          SizedBox(
-                            width: 12,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(Provider.of<AppData>(context)
-                                          .pickUpLocation !=
-                                      null
-                                  ? Provider.of<AppData>(context)
-                                      .pickUpLocation
-                                      .placeName
-                                  : 'Add Home'),
-                              SizedBox(
-                                height: 4,
-                              ),
-                              Text(
-                                'Your living home address',
-                                style:
-                                    TextStyle(color: Colors.grey, fontSize: 12),
-                              )
-                            ],
-                          ),
-                        ],
-                      ), */
-                      /* SizedBox(
-                        height: 24,
-                      ),
-                      DividerWidget(),
-                      SizedBox(
-                        height: 24,
-                      ), */
-                      /* Row(
-                        children: [
-                          Icon(
-                            Icons.work,
-                            color: Colors.grey,
-                          ),
-                          SizedBox(
-                            width: 12,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text('Add work'),
-                              SizedBox(
-                                height: 4,
-                              ),
-                              Text(
-                                'Your office address',
-                                style:
-                                    TextStyle(color: Colors.grey, fontSize: 12),
-                              )
-                            ],
-                          ),
-                        ],
-                      ), */
                     ],
                   ),
                 ),
               ),
             ),
           ),
+
           Positioned(
             bottom: 0,
             left: 0,
@@ -612,7 +446,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
               child: Container(
                 height: rideDetailContainerHeight,
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: HexColor("#29557a"),
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(16),
                     topRight: Radius.circular(16),
@@ -630,6 +464,28 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                   padding: EdgeInsets.symmetric(vertical: 17),
                   child: Column(
                     children: [
+                      Row(
+                        children: [
+                          SizedBox(
+                            width: 20,
+                          ),
+                          Text(
+                            ((tripDirectionDetails != null)
+                                ? tripDirectionDetails.durationText
+                                : ''),
+                            style: TextStyle(fontSize: 16, color: Colors.white),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text(
+                            ((tripDirectionDetails != null)
+                                ? tripDirectionDetails.distanceText
+                                : ''),
+                            style: TextStyle(fontSize: 16, color: Colors.white),
+                          ),
+                        ],
+                      ),
                       SizedBox(
                         height: 10,
                       ),
@@ -643,7 +499,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                             carOutContainer();
                             getMarkerDataBlue();
                           },
-                          color: Theme.of(context).accentColor,
+                          color: HexColor("#eb5844"),
                           child: Padding(
                             padding: EdgeInsets.all(17),
                             child: Row(
@@ -679,7 +535,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                             carOutContainer();
                             getMarkerDataBrown();
                           },
-                          color: Theme.of(context).accentColor,
+                          color: HexColor("#eb5844"),
                           child: Padding(
                             padding: EdgeInsets.all(17),
                             child: Row(
@@ -705,73 +561,13 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                       SizedBox(
                         height: 10,
                       ),
-                      /* Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 16,
-                        ),
-                        child: RaisedButton(
-                          onPressed: () {
-                            Geoflutterfire geo = Geoflutterfire();
-                            GeoFirePoint pointuser =
-                                geo.point(latitude: 0, longitude: 0);
-                            FirebaseAuth firebaseAuth = FirebaseAuth.instance;
-                            String uid = firebaseAuth.currentUser.uid;
-                            var user_uid = firebaseAuth.currentUser.uid;
-                            FirebaseFirestore.instance
-                                .collection('location')
-                                .doc('user')
-                                .collection('สายสีน้ำตาลแดง')
-                                .doc('$user_uid')
-                                .delete();
-                            FirebaseFirestore.instance
-                                .collection('location')
-                                .doc('user')
-                                .collection('สายสีน้ำเงิน')
-                                .doc('$user_uid')
-                                .delete();
-                            FirebaseFirestore.instance
-                                .collection('location')
-                                .doc('user')
-                                .collection('null')
-                                .doc('$user_uid')
-                                .set({'geo': pointuser.data});
-                            if (drawOpen) {
-                              scaffoldKey.currentState.openDrawer();
-                            }
-                            //scaffoldKey.currentState.openDrawer();
-                            else {
-                              resetApp();
-                            }
-                          },
-                          color: Theme.of(context).accentColor,
-                          child: Padding(
-                            padding: EdgeInsets.all(17),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  'ขึ้นรถแล้ว',
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white),
-                                ),
-                                Icon(
-                                  FontAwesomeIcons.taxi,
-                                  color: Colors.white,
-                                  size: 26,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ), */
                     ],
                   ),
                 ),
               ),
             ),
           ),
+
           Positioned(
             bottom: 0,
             left: 0,
@@ -783,7 +579,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
               child: Container(
                 height: carOutHeight,
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: HexColor("#29557a"),
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(16),
                     topRight: Radius.circular(16),
@@ -807,30 +603,6 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                         ),
                         child: RaisedButton(
                           onPressed: () {
-                            /* Geoflutterfire geo = Geoflutterfire();
-                            GeoFirePoint pointuser =
-                                geo.point(latitude: 0, longitude: 0);
-                            FirebaseAuth firebaseAuth = FirebaseAuth.instance;
-                            String uid = firebaseAuth.currentUser.uid;
-                            var user_uid = firebaseAuth.currentUser.uid;
-                            FirebaseFirestore.instance
-                                .collection('location')
-                                .doc('user')
-                                .collection('สายสีน้ำตาลแดง')
-                                .doc('$user_uid')
-                                .delete();
-                            FirebaseFirestore.instance
-                                .collection('location')
-                                .doc('user')
-                                .collection('สายสีน้ำเงิน')
-                                .doc('$user_uid')
-                                .delete();
-                            FirebaseFirestore.instance
-                                .collection('location')
-                                .doc('user')
-                                .collection('null')
-                                .doc('$user_uid')
-                                .set({'geo': pointuser.data}); */
                             FirebaseFirestore firebaseFirestore =
                                 FirebaseFirestore.instance;
                             FirebaseAuth firebaseAuth = FirebaseAuth.instance;
@@ -849,21 +621,21 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                               resetApp();
                             }
                           },
-                          color: Theme.of(context).accentColor,
+                          color: HexColor("#eb5844"),
                           child: Padding(
                             padding: EdgeInsets.all(17),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  'ขึ้นรถแล้ว',
+                                  'ยกเลิก',
                                   style: TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white),
                                 ),
                                 Icon(
-                                  FontAwesomeIcons.taxi,
+                                  Icons.close,
                                   color: Colors.white,
                                   size: 26,
                                 ),
@@ -878,6 +650,8 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
               ),
             ),
           ),
+          //Expanded(child: Container()),///
+          //Text((tripDirectionDetails != null) ?'\$${AssistantsMethods.calculateFares(tripDirectionDetails)}' : ''),///
           /* Positioned(
             bottom: 50,
             left: 10,

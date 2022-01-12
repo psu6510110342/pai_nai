@@ -22,7 +22,6 @@ DatabaseReference usersRef =
     FirebaseDatabase.instance.reference().child('user');
 
 class MyApp extends StatelessWidget {
-  
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -55,7 +54,7 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        initialRoute: MainScreen.idScreen,
+        initialRoute: Home.idScreen,
         routes: {
           Mapdriver.idScreen: (context) => Mapdriver(),
           Homescreen.idScreen: (context) => Homescreen(),

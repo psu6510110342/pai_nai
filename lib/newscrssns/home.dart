@@ -17,7 +17,7 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
-    //checkStatus();
+    checkStatus();
   }
 
    Future<void> checkStatus() async {
