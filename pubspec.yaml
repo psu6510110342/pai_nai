@@ -93,6 +93,7 @@ flutter:
      - images/car_stop.png
      - images/car_stop_2.png
      - images/car_map.png
+     - images/car_map_2.png
      - images/logo.jpg
      - images/logo_2.png
      #- assets/svg/arrow.svg

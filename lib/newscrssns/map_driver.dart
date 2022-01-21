@@ -5,6 +5,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:pai_nai/Assistants/assistantsMethods.dart';
+import 'package:pai_nai/newscrssns/app_localizations.dart';
 import 'package:pai_nai/newscrssns/setting.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
@@ -113,89 +114,15 @@ class _MapdriverState extends State<Mapdriver> {
     });
   }
 
-  /* Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
-
-  void initMarker(specify, specifyId) async {
-    var markerIdVal = specifyId;
-    final MarkerId markerId = MarkerId(markerIdVal);
-    final Marker marker = Marker(
-        markerId: markerId,
-        position:
-            LatLng(specify['location'].latitude, specify['location'].longitude),
-        infoWindow: InfoWindow(title: specify['plate']));
-    setState(() {
-      markers[markerId] = marker;
-    });
-  }
-//เอาข้อมูลจาก firebase มาเก็บ
-  getMarkerData() async {
-    FirebaseFirestore.instance
-        .collection('collectionPath')
-        .get()
-        .then((myMockDoc) {
-      if (myMockDoc.docs.isNotEmpty) {
-        for (int i = 0; i < myMockDoc.docs.length; i++) {
-          initMarker(myMockDoc.docs[i].data, myMockDoc.docs[i].id);
-        }
-      }
-    });
-  }
-
-  void initState() {
-    getMarkerData();
-    super.initState();
-  }
-
- */
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      /* appBar: AppBar(
-          //backgroundColor: Colors.grey.shade100,
-          //actions: <Widget>[showlocate()],
-          ), */
-      /* drawer: Container(
-        color: Colors.white,
-        width: 255,
-        child: Drawer(
-          child: ListView(
-            children: [
-              Container(
-                height: 165,
-                child: DrawerHeader(
-                  decoration: BoxDecoration(color: Colors.white),
-                  child: Row(
-                    children: [
-                      SwitchListTile(
-                          title: Text('เปิดตำแหน่งของท่าน'),
-                          value: _openlocation,
-                          onChanged: (bool value) {
-                            setState(() {
-                              _openlocation = value;
-                            });
-
-                            if (_openlocation) {
-                              setdata();
-                            } else {
-                              deletedata();
-                            }
-                          })
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ), */
       body: Stack(
         children: [
           showGoogleMap(),
           switch_locate(),
         ],
       ),
-      //bottomNavigationBar: Bottomnavbar(),
       backgroundColor: Colors.grey.shade100,
     );
   }
@@ -204,13 +131,12 @@ class _MapdriverState extends State<Mapdriver> {
     return Row(
       children: [
         SwitchListTile(
-            title: Text('เปิดตำแหน่งของท่าน'),
+            title: Text(AppLocalizations.of(context).translate('เปิดตำแหน่งของท่าน')),
             value: _openlocation,
             onChanged: (bool value) {
               setState(() {
                 _openlocation = value;
               });
-
               if (_openlocation) {
                 setdata();
               } else {
@@ -737,7 +663,7 @@ class _MapdriverState extends State<Mapdriver> {
             .doc('$type')
             .collection('$cartype')
             .doc('$user_uid')
-            .update({
+            .set({
           'lat': '${position.latitude}',
           'lng': '${position.longitude}'
         });

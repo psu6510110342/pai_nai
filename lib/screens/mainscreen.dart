@@ -12,6 +12,7 @@ import 'package:pai_nai/Assistants/assistantsMethods.dart';
 import 'package:pai_nai/DataHandler/appData.dart';
 import 'package:pai_nai/Models/directDetails.dart';
 import 'package:pai_nai/newscreens_2/home_screen.dart';
+import 'package:pai_nai/newscrssns/app_localizations.dart';
 import 'package:pai_nai/newscrssns/cashpage.dart';
 //import 'package:pai_nai/newscreens_2/home_screen.dart';
 import 'package:pai_nai/newscrssns/setting.dart';
@@ -34,13 +35,15 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
 
   DirectionDetails tripDirectionDetails; //
   bool drawOpen = true;
-
+  double rideDetailContainerHeight = 0;
+  double searchContainerHeight = 205;
+  double carOutHeight = 0;
   resetApp() {
     setState(() {
       drawOpen = true;
-      searchContainerHeight = 200;
+      searchContainerHeight = 205;
       rideDetailContainerHeight = 0;
-      bottomPaddingOfMap = 205;
+      bottomPaddingOfMap = 210;
       carOutHeight = 0;
 
       polylineSet.clear();
@@ -52,6 +55,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
   } //
 
   BitmapDescriptor pinicon;
+  BitmapDescriptor pinicon_2;
 
   GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
   Completer<GoogleMapController> _controllerGoogleMap = Completer();
@@ -61,10 +65,6 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
   double bottomPaddingOfMap = 0;
   Set<Marker> markersSet = {};
   Set<Circle> circlesSet = {};
-
-  double rideDetailContainerHeight = 0;
-  double searchContainerHeight = 200;
-  double carOutHeight = 0;
 
   void displayRideDetailsContainer() async {
     await getPlaceDirection();
@@ -86,8 +86,8 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
     setState(() {
       searchContainerHeight = 0;
       rideDetailContainerHeight = 0;
-      bottomPaddingOfMap = 105;
-      carOutHeight = 100;
+      bottomPaddingOfMap = 145;
+      carOutHeight = 140;
       drawOpen = false;
     });
   }
@@ -193,6 +193,11 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
             ImageConfiguration(size: Size(1, 1)), 'images/car_map.png')
         .then((value) {
       pinicon = value;
+    });
+    BitmapDescriptor.fromAssetImage(
+            ImageConfiguration(size: Size(1, 1)), 'images/car_stop_2.png')
+        .then((value) {
+      pinicon_2 = value;
     });
   }
 
@@ -321,7 +326,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                         height: 6,
                       ),
                       Text(
-                        'Where to?',
+                        AppLocalizations.of(context).translate('Where to?'),
                         style:
                             TextStyle(fontSize: 20, color: HexColor("#ffffff")),
                       ),
@@ -362,7 +367,8 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                                 SizedBox(
                                   width: 10,
                                 ),
-                                Text('Seach Dorp off'),
+                                Text(AppLocalizations.of(context)
+                                    .translate('Search Drop off')),
                               ],
                             ),
                           ),
@@ -506,7 +512,8 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  'สายสีน้ำเงิน',
+                                  AppLocalizations.of(context)
+                                      .translate('สายสีน้ำเงิน'),
                                   style: TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
@@ -542,7 +549,8 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  'สายสีน้ำตาลแดง',
+                                  AppLocalizations.of(context)
+                                      .translate('สายสีน้ำตาลแดง'),
                                   style: TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
@@ -597,6 +605,19 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                   padding: EdgeInsets.symmetric(vertical: 17),
                   child: Column(
                     children: [
+                      Row(
+                        children: [
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Image.asset('images/car_map_2.png'),
+                          Text(
+                            AppLocalizations.of(context)
+                                .translate('เลือกรถที่ต้องการจะขึ้น'),
+                            style: TextStyle(fontSize: 20, color: Colors.white),
+                          ),
+                        ],
+                      ),
                       Padding(
                         padding: EdgeInsets.symmetric(
                           horizontal: 16,
@@ -628,7 +649,8 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  'ยกเลิก',
+                                  AppLocalizations.of(context)
+                                      .translate('ยกเลิก'),
                                   style: TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
@@ -671,6 +693,32 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
     );
   }
 
+  Future<void> carStop() async {
+    Marker car_1Stop = Marker(
+      //infoWindow: InfoWindow(title: 'car stop'),
+      icon: pinicon_2,
+      position: LatLng(7.028850, 100.474431),
+      markerId: MarkerId('carstop1'),
+    );
+    Marker car_2Stop = Marker(
+      //infoWindow: InfoWindow(title: 'car stop'),
+      icon: pinicon_2,
+      position: LatLng(7.031661, 100.474923),
+      markerId: MarkerId('carstop2'),
+    );
+    Marker car_3Stop = Marker(
+      //infoWindow: InfoWindow(title: 'car stop'),
+      icon: pinicon_2,
+      position: LatLng(7.025432, 100.475299),
+      markerId: MarkerId('carstop3'),
+    );
+    setState(() {
+      markersSet.add(car_3Stop);
+      markersSet.add(car_1Stop);
+      markersSet.add(car_2Stop);
+    });
+  }
+
   Future<void> getPlaceDirection() async {
     var initailPos =
         Provider.of<AppData>(context, listen: false).pickUpLocation;
@@ -680,7 +728,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
     showDialog(
         context: context,
         builder: (BuildContext context) => ProgressDialog(
-              message: 'Please wait...',
+              message: AppLocalizations.of(context).translate('Please wait...'),
             ));
     var details = await AssistantsMethods.obtainDirectionDetails(
         pickUpLatLng, dropOffLatLng);
@@ -776,32 +824,6 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
     setState(() {
       circlesSet.add(pickUpLocCircle);
       circlesSet.add(dropOffLocCircle);
-    });
-  }
-
-  Future<void> carStop() async {
-    Marker car_1Stop = Marker(
-      //infoWindow: InfoWindow(title: 'car stop'),
-      icon: pinicon,
-      position: LatLng(7.028850, 100.474431),
-      markerId: MarkerId('carstop1'),
-    );
-    Marker car_2Stop = Marker(
-      //infoWindow: InfoWindow(title: 'car stop'),
-      icon: pinicon,
-      position: LatLng(7.031661, 100.474923),
-      markerId: MarkerId('carstop2'),
-    );
-    Marker car_3Stop = Marker(
-      //infoWindow: InfoWindow(title: 'car stop'),
-      icon: pinicon,
-      position: LatLng(7.025432, 100.475299),
-      markerId: MarkerId('carstop3'),
-    );
-    setState(() {
-      markersSet.add(car_3Stop);
-      markersSet.add(car_1Stop);
-      markersSet.add(car_2Stop);
     });
   }
 }

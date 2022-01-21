@@ -6,6 +6,7 @@ import 'package:pai_nai/DataHandler/appData.dart';
 import 'package:pai_nai/Models/address.dart';
 import 'package:pai_nai/Models/placePredictions.dart';
 import 'package:pai_nai/configMaps.dart';
+import 'package:pai_nai/newscrssns/app_localizations.dart';
 import 'package:pai_nai/widgets/Divider.dart';
 import 'package:pai_nai/widgets/progressDialog.dart';
 import 'package:provider/provider.dart';
@@ -32,8 +33,8 @@ class _SearchScreensState extends State<SearchScreens> {
             decoration: BoxDecoration(
               color: HexColor("#29557a"),
               borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(18),
-                      bottomRight: Radius.circular(18)),
+                  bottomLeft: Radius.circular(18),
+                  bottomRight: Radius.circular(18)),
               boxShadow: [
                 BoxShadow(
                   color: Colors.white,
@@ -57,13 +58,18 @@ class _SearchScreensState extends State<SearchScreens> {
                           onTap: () {
                             Navigator.pop(context);
                           },
-                          child: Icon(Icons.arrow_back_ios,color: Colors.white,)),
+                          child: Icon(
+                            Icons.arrow_back_ios,
+                            color: Colors.white,
+                          )),
                       Center(
                         child: Text(
-                          'Set Drop Off',
-                          style:
-                              TextStyle(fontSize: 18, fontFamily: 'Brand-Bold',color: Colors.white),
-                              
+                          AppLocalizations.of(context)
+                              .translate('Set Drop Off'),
+                          style: TextStyle(
+                              fontSize: 18,
+                              fontFamily: 'Brand-Bold',
+                              color: Colors.white),
                         ),
                       ),
                     ],
@@ -73,7 +79,10 @@ class _SearchScreensState extends State<SearchScreens> {
                   ),
                   Row(
                     children: [
-                      Icon(Icons.account_circle,color: Colors.white,),
+                      Icon(
+                        Icons.account_circle,
+                        color: Colors.white,
+                      ),
                       /* Image.asset(
                         'images/pickicon.png',
                         height: 20,
@@ -95,7 +104,8 @@ class _SearchScreensState extends State<SearchScreens> {
                           },
                           controller: pickUpTextEditingController,
                           decoration: InputDecoration(
-                            hintText: 'PickUp Location',
+                            hintText: AppLocalizations.of(context)
+                                .translate('PickUp Location'),
                             fillColor: Colors.white,
                             filled: true,
                             border: InputBorder.none,
@@ -112,7 +122,10 @@ class _SearchScreensState extends State<SearchScreens> {
                   ),
                   Row(
                     children: [
-                      Icon(Icons.pin_drop,color: Colors.white,),
+                      Icon(
+                        Icons.pin_drop,
+                        color: Colors.white,
+                      ),
                       /* Image.asset(
                         'images/desticon.png',
                         height: 20,
@@ -133,7 +146,8 @@ class _SearchScreensState extends State<SearchScreens> {
                           },
                           controller: dropOffTextEditingController,
                           decoration: InputDecoration(
-                            hintText: 'Where to?',
+                            hintText: AppLocalizations.of(context)
+                                .translate('Where to?'),
                             fillColor: Colors.white,
                             filled: true,
                             border: InputBorder.none,
@@ -178,7 +192,6 @@ class _SearchScreensState extends State<SearchScreens> {
           'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$placeName&key=$mapKey&sessiontoken=1234567890&components=country:th';
 
       var res = await RequestAssistant.getRequest(autoCompleteUrl);
-     
 
       if (res == 'failed') {
         return;
@@ -209,7 +222,7 @@ class PredictionTile extends StatelessWidget {
       onPressed: () {
         getPlacerAddressDetails(placePredictions.place_id, context);
       },
-          child: Container(
+      child: Container(
         child: Column(
           children: [
             SizedBox(
@@ -217,7 +230,10 @@ class PredictionTile extends StatelessWidget {
             ),
             Row(
               children: [
-                Icon(Icons.add_location,color: HexColor("#29557a"),),
+                Icon(
+                  Icons.add_location,
+                  color: HexColor("#29557a"),
+                ),
                 SizedBox(
                   width: 14,
                 ),
@@ -228,7 +244,8 @@ class PredictionTile extends StatelessWidget {
                       Text(
                         placePredictions.main_text.toString(),
                         overflow: TextOverflow.ellipsis,
-                        style: TextStyle(fontSize: 16,color: HexColor("#29557a")),
+                        style:
+                            TextStyle(fontSize: 16, color: HexColor("#29557a")),
                       ),
                       SizedBox(
                         height: 3,
@@ -256,7 +273,8 @@ class PredictionTile extends StatelessWidget {
     showDialog(
         context: context,
         builder: (BuildContext context) => ProgressDialog(
-              message: 'Setting Dropoff, Please wait...',
+              message: AppLocalizations.of(context)
+                              .translate('Setting Dropoff, Please wait...'),
             ));
     String placeDetailsUrl =
         'https://maps.googleapis.com/maps/api/place/details/json?place_id=$placeId&key=$mapKey';
@@ -276,7 +294,7 @@ class PredictionTile extends StatelessWidget {
           .updateDropOffLocationaddress(address);
       print('This is Drop Off Location ::');
       print(address.placeName);
-      Navigator.pop(context,'obtainDirection');
+      Navigator.pop(context, 'obtainDirection');
     }
   }
 }

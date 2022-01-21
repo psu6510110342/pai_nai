@@ -1,28 +1,113 @@
-return Scaffold(
-    body:Stack(
-        children:[
-            Positioned(
-            left: 0,
-            right: 0,
-            bottom: 0,
-            child: AnimatedSize(
-              vsync: this,
-              curve: Curves.bounceIn,
-              duration: new Duration(milliseconds: 160),
-              child: Container(
-                height: 300,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(18),
-                      topRight: Radius.circular(18)),
-                ),
-                
-              ),
-            ),
-          ),
-        ],
-    ),
-);
+'Setting Dropoff, Please wait...'/
+'Please wait...'/
+'สายสีน้ำตาลแดง'/
+'สายสีน้ำเงิน'/
+'SettingDriver'/
+'ป้ายทะเบียน'/
+'จำนวนผู้ใช้บริการในขณะนี้'/
+'จำนวนบุคคลที่ต้องการใช้บริการ'/
+'ช่องทางการจ่ายเงิน'/
+"Please choose payment way"/
+"Confirm!"/
+'SORRY!'/
+'Sorry, the number of people exceeded the standard set !'/
+'Number Plate'/
+'EXAMPLE  กก-0000'/
+'Please Enter Your Plate'/
+'Please Check Your Plate\'s Form '/
+"Please choose car's way"/
+'เลือกรถที่ต้องการจะขึ้น'/
 
 
+"Sign in": "Sign in",
+    "Sign up": "Sign up",
+    "profile": "profile",
+    "Register": "Register",
+    "Apologize": "Apologize",
+    "ERROR": "ERROR",
+    "OK": "OK",
+
+    "sign out": "sign out",
+    "Are You Sure To Sign Out?": "Are You Sure To Sign Out?",
+    "Cancel": "Cancel",
+    "Sure": "Sure",
+
+    "Name": "Name",
+    "PUT YOUR NAME": "PUT YOUR NAME",
+    "Please Enter Your Name": "Please Enter Your Name",
+
+    "UserName": "UserName",
+    "Put Your Username": "Put Your Username",
+    "Please Enter Your Username": "Please Enter Your Username",
+
+    "Password": "Password",
+    "Put Your Password": "Put Your Password",
+    "PUT YOUR PASSWORD MORE 6": "PUT YOUR PASSWORD MORE 6",
+    "Please Enter Your PassWord": "Please Enter Your PassWord",
+    "Please Enter More 6 Character": "Please Enter More 6 Character",
+
+    "Email": "Email",
+    "PUT YOUR EMAIL": "PUT YOUR EMAIL",
+    "Please Enter Your Email": "Please Enter Your Email",
+    "Please Check Your Email's Form ": "Please Check Your Email's Form ",
+
+    "Number Plate": "Number Plate",
+    "EXAMPLE  กก-0000": "EXAMPLE  กก-0000",
+    "Please Enter Your Plate": "Please Enter Your Plate",
+    "Please Check Your Plate's Form": "Please Check Your Plate's Form",
+    
+    "type": "type",
+    "Please Choose Type": "Please Choose Type",
+    "Please Enter Your Type": "Please Enter Your Type",
+    
+    "Your Car's Type": "Your Car's Type",
+    "Please Check Your answer": "Please Check Your answer",
+    
+    "setting": "setting",
+    "User": "User",
+    "Driver": "Driver",
+    
+    "where to?": "Where To?",
+    "Search": "Search",
+    
+    "Search Drop off": "Search Drop off",
+    "สายสีน้ำเงิน": "Blue Line",
+    "สายสีน้ำตาลแดง": "Hazel Line",
+    "สายสีขาว": "White Line",
+    "ขึ้นรถแล้ว": "Got In The Car",
+    
+    "Set Drop Off": "Set Drop Off",
+    "PickUp Location": "PickUp Location",
+    "Where to?": "Where to?",
+    "Seach Dorp off": "Seach Dorp off",
+    "ยกเลิก": "cancel",
+    "ลงรถแล้ว": "Get Off The Car",
+    "Update": "Update",
+    "My Account": "My Account",
+    "Setting": "Setting",
+    "location": "location",
+    "เปิดตำแหน่งของท่าน": "Open Your Location",
+    "hello": "hello",
+    "Sign Out": "Sign Out",
+    "Select Item": "Select Item",
+    "Language": "Language",
+    "Name :": "Name :",
+    "UserName :": "UserName :",
+    "Password :": "Password :" ,
+
+    "Setting Dropoff, Please wait..." : "Setting Dropoff, Please wait...",
+    "Please wait..." : "Please wait...",
+    "SettingDriver" : "SettingDriver" ,
+    "ป้ายทะเบียน" : "NumberPlate",
+    "จำนวนผู้ใช้บริการในขณะนี้" : "Number of service users at the moment" ,
+    "จำนวนบุคคลที่ต้องการใช้บริการ" : "Number of people who want to use the service",
+    "ช่องทางการจ่ายเงิน" : "Payment Method" ,
+    "Please choose payment way" : "Please choose payment way",
+    "Confirm!" : "Confirm!",
+    "SORRY!" : "SORRY!",
+    "Sorry, the number of people exceeded the standard set !" : "Sorry, the number of people exceeded the standard set !",
+    "cash" : "cash",
+    "bank" : "bank",
+    "paypal"  : "paypal",
+    "Please choose car's way" : "Please choose car's way",
+    "เลือกรถที่ต้องการจะขึ้น" : "Choose the car you want to pick up"

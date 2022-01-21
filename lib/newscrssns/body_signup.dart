@@ -8,6 +8,7 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:pai_nai/decoration/constants.dart';
 import 'package:pai_nai/decoration/mystyle.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:pai_nai/newscrssns/app_localizations.dart';
 import 'package:pai_nai/newscrssns/head_box.dart';
 import 'package:pai_nai/screens/mainscreen.dart';
 //import 'package:pai_nai/screens/map.dart';
@@ -255,7 +256,8 @@ class _BodysignupState extends State<Bodysignup> {
   Widget dropdown() {
     return DropDownField(
       controller: car,
-      hintText: "Please choose car's way",
+      hintText: AppLocalizations.of(context)
+                                      .translate("Please choose car's way"),
       enabled: true,
       // itemsVisibleInDropdown: 2, // //ไม่จำเป็น
       items: carway,
@@ -329,13 +331,16 @@ class _BodysignupState extends State<Bodysignup> {
             color: HexColor("#29557a"),
             size: 32.0,
           ),
-          labelText: 'Name',
+          labelText: AppLocalizations.of(context)
+                                      .translate('Name'),
           labelStyle: TextStyle(color: HexColor("#29557a")),
-          helperText: 'PUT YOUR NAME',
+          helperText: AppLocalizations.of(context)
+                                      .translate('PUT YOUR NAME'),
           helperStyle: TextStyle(color: HexColor("#29557a"))),
       validator: (String value) {
         if (value.isEmpty) {
-          return 'Please Enter Your Name';
+          return AppLocalizations.of(context)
+                                      .translate('Please Enter Your Name');
         } else {
           return null;
         }
@@ -382,15 +387,19 @@ class _BodysignupState extends State<Bodysignup> {
             color: HexColor("#29557a"),
             size: 32.0,
           ),
-          labelText: 'Password',
+          labelText: AppLocalizations.of(context)
+                                      .translate('Password'),
           labelStyle: TextStyle(color: HexColor("#29557a")),
-          helperText: 'PUT YOUR PASSWORD MORE 6',
+          helperText: AppLocalizations.of(context)
+                                      .translate('PUT YOUR PASSWORD MORE 6'),
           helperStyle: TextStyle(color: HexColor("#29557a"))),
       validator: (String value) {
         if (value.isEmpty) {
-          return 'Please Enter Your PassWord';
+          return AppLocalizations.of(context)
+                                      .translate('Please Enter Your PassWord');
         } else if (value.length < 6) {
-          return 'Please Enter More 6 Character';
+          return AppLocalizations.of(context)
+                                      .translate('Please Enter More 6 Character');
         } else {
           return null;
         }
@@ -411,15 +420,19 @@ class _BodysignupState extends State<Bodysignup> {
             color: HexColor("#29557a"),
             size: 32.0,
           ),
-          labelText: 'Email',
+          labelText: AppLocalizations.of(context)
+                                      .translate('Email'),
           labelStyle: TextStyle(color: HexColor("#29557a")),
-          helperText: 'PUT YOUR EMAIL',
+          helperText: AppLocalizations.of(context)
+                                      .translate('PUT YOUR EMAIL'),
           helperStyle: TextStyle(color: HexColor("#29557a"))),
       validator: (String value) {
         if (value.isEmpty) {
-          return 'Please Enter Your Email';
+          return AppLocalizations.of(context)
+                                      .translate('Please Enter Your Email');
         } else if (!(value.contains('@') && value.contains('.'))) {
-          return 'Please Check Your Email\'s Form ';
+          return AppLocalizations.of(context)
+                                      .translate('Please Check Your Email\'s Form ');
         } else {
           return null;
         }
@@ -460,7 +473,8 @@ class _BodysignupState extends State<Bodysignup> {
                     });
                   },
                 ),
-                Text('User', style: TextStyle(color: HexColor("#29557a")))
+                Text(AppLocalizations.of(context)
+                                      .translate('User'), style: TextStyle(color: HexColor("#29557a")))
               ],
             ),
           ),
@@ -482,7 +496,8 @@ class _BodysignupState extends State<Bodysignup> {
                     });
                   },
                 ),
-                Text('Driver', style: TextStyle(color: HexColor("#29557a")))
+                Text(AppLocalizations.of(context)
+                                      .translate('Driver'), style: TextStyle(color: HexColor("#29557a")))
               ],
             ),
           ),
@@ -523,15 +538,19 @@ class _BodysignupState extends State<Bodysignup> {
             color: HexColor("#29557a"),
             size: 32.0,
           ),
-          labelText: 'Number Plate',
+          labelText: AppLocalizations.of(context)
+                                      .translate('Number Plate'),
           labelStyle: TextStyle(color: HexColor("#29557a")),
-          helperText: 'EXAMPLE  กก-0000',
+          helperText: AppLocalizations.of(context)
+                                      .translate('EXAMPLE  กก-0000'),
           helperStyle: TextStyle(color: HexColor("#29557a"))),
       validator: (String value) {
         if (value.isEmpty) {
-          return 'Please Enter Your Plate';
+          return AppLocalizations.of(context)
+                                      .translate('Please Enter Your Plate');
         } else if (!(value.contains('-'))) {
-          return 'Please Check Your Plate\'s Form ';
+          return AppLocalizations.of(context)
+                                      .translate('Please Check Your Plate\'s Form');
         } else {
           return null;
         }
@@ -613,7 +632,8 @@ class _BodysignupState extends State<Bodysignup> {
           constraints: BoxConstraints(maxWidth: 250.0, minHeight: 50.0),
           alignment: Alignment.center,
           child: Text(
-            "Sign Up",
+            AppLocalizations.of(context)
+                                      .translate("Sign Up"),
             textAlign: TextAlign.center,
             style: TextStyle(color: Colors.white, fontSize: 15),
           ),
@@ -650,7 +670,8 @@ class _BodysignupState extends State<Bodysignup> {
                     Row(
                       children: [
                         Text(
-                          'Please Choose Type',
+                          AppLocalizations.of(context)
+                                      .translate('Please Choose Type'),
                           style: TextStyle(
                               color: HexColor("#29557a"),
                               fontWeight: FontWeight.bold,

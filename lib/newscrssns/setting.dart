@@ -57,7 +57,8 @@ class _SettingState extends State<Setting> {
           return AlertDialog(
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8.0)),
-            title: Text('Are You Sure To Sign Out?'),
+            title: Text(AppLocalizations.of(context)
+                .translate('Are You Sure To Sign Out?')),
             actions: <Widget>[cancelButton(), okButton()],
           );
         });
@@ -65,7 +66,7 @@ class _SettingState extends State<Setting> {
 
   Widget okButton() {
     return FlatButton(
-        child: Text('Sure'),
+        child: Text(AppLocalizations.of(context).translate('Sure')),
         onPressed: () {
           Navigator.of(context).pop();
           processSignout();
@@ -96,7 +97,7 @@ class _SettingState extends State<Setting> {
         onPressed: () {
           Navigator.of(context).pop();
         },
-        child: Text('Cancel'));
+        child: Text(AppLocalizations.of(context).translate('Cancel')));
   }
 
   // **google translate**
@@ -164,7 +165,9 @@ class _SettingState extends State<Setting> {
                 size: 30,
               ),
               SizedBox(width: 20),
-              Expanded(child: Text('My Account')),
+              Expanded(
+                  child: Text(
+                      AppLocalizations.of(context).translate('My Account'))),
 
               // user()
             ]),
@@ -186,8 +189,7 @@ class _SettingState extends State<Setting> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Text(
-                'Setting',
-                // AppLocalizations.of(context).translate('Setting'),
+                AppLocalizations.of(context).translate('Setting'),
                 style: TextStyle(
                     fontSize: 21,
                     fontWeight: FontWeight.bold,
@@ -255,7 +257,7 @@ class _SettingState extends State<Setting> {
           SizedBox(width: 20),
           Expanded(
             child: Text(
-              'Sign Out',
+              AppLocalizations.of(context).translate('Sign Out'),
               style: Theme.of(context).textTheme.bodyText1,
             ),
           ),

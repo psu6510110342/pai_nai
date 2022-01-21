@@ -56,7 +56,7 @@ class _SettingDriverState extends State<SettingDriver> {
           return AlertDialog(
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8.0)),
-            title: Text('Are You Sure To Sign Out?'),
+            title: Text(AppLocalizations.of(context).translate('Are You Sure To Sign Out?')),
             actions: <Widget>[cancelButton(), okButton()],
           );
         });
@@ -64,7 +64,7 @@ class _SettingDriverState extends State<SettingDriver> {
 
   Widget okButton() {
     return FlatButton(
-        child: Text('Sure'),
+        child: Text(AppLocalizations.of(context).translate('Sure')),
         onPressed: () {
           Navigator.of(context).pop();
           processSignout();
@@ -95,7 +95,7 @@ class _SettingDriverState extends State<SettingDriver> {
         onPressed: () {
           Navigator.of(context).pop();
         },
-        child: Text('Cancel'));
+        child: Text(AppLocalizations.of(context).translate('Cancel')));
   }
 
   // **google translate**
@@ -163,7 +163,7 @@ class _SettingDriverState extends State<SettingDriver> {
                 size: 30,
               ),
               SizedBox(width: 20),
-              Expanded(child: Text('My Account')),
+              Expanded(child: Text(AppLocalizations.of(context).translate('My Account'))),
 
               // user()
             ]),
@@ -185,7 +185,7 @@ class _SettingDriverState extends State<SettingDriver> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Text(
-                'SettingDriver',
+                AppLocalizations.of(context).translate('SettingDriver'),
                 // AppLocalizations.of(context).translate('SettingDriver'),
                 style: TextStyle(
                     fontSize: 21,
@@ -220,7 +220,7 @@ class _SettingDriverState extends State<SettingDriver> {
       children: [
         ListTile(title: Text('location')),
         SwitchListTile(
-            title: Text('เปิดตำแหน่งของท่าน'),
+            title: Text(AppLocalizations.of(context).translate('เปิดตำแหน่งของท่าน')),
             value: _openlocation,
             onChanged: (bool value) {
               setState(() {
@@ -254,7 +254,7 @@ class _SettingDriverState extends State<SettingDriver> {
           SizedBox(width: 20),
           Expanded(
             child: Text(
-              'Sign Out',
+              AppLocalizations.of(context).translate('Sign Out'),
               style: Theme.of(context).textTheme.bodyText1,
             ),
           ),

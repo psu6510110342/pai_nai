@@ -11,6 +11,7 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:pai_nai/Assistants/assistantsMethods.dart';
 import 'package:pai_nai/DataHandler/appData.dart';
 import 'package:pai_nai/Models/directDetails.dart';
+import 'package:pai_nai/newscrssns/app_localizations.dart';
 import 'package:pai_nai/newscrssns/cashpage.dart';
 import 'package:pai_nai/screens/mainscreen.dart';
 import 'package:pai_nai/widgets/progressDialog.dart';
@@ -42,6 +43,7 @@ class _FinishBrownState extends State<FinishBrown>
   bool drawOpen = true;
 
   BitmapDescriptor pinicon;
+  BitmapDescriptor pinicon_2;
 
   GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
   Completer<GoogleMapController> _controllerGoogleMap = Completer();
@@ -76,19 +78,19 @@ class _FinishBrownState extends State<FinishBrown>
   Future<void> carStop() async {
     Marker car_1Stop = Marker(
       //infoWindow: InfoWindow(title: 'car stop'),
-      icon: pinicon,
+      icon: pinicon_2,
       position: LatLng(7.028850, 100.474431),
       markerId: MarkerId('carstop1'),
     );
     Marker car_2Stop = Marker(
       //infoWindow: InfoWindow(title: 'car stop'),
-      icon: pinicon,
+      icon: pinicon_2,
       position: LatLng(7.031661, 100.474923),
       markerId: MarkerId('carstop2'),
     );
     Marker car_3Stop = Marker(
       //infoWindow: InfoWindow(title: 'car stop'),
-      icon: pinicon,
+      icon: pinicon_2,
       position: LatLng(7.025432, 100.475299),
       markerId: MarkerId('carstop3'),
     );
@@ -108,7 +110,8 @@ class _FinishBrownState extends State<FinishBrown>
     showDialog(
         context: context,
         builder: (BuildContext context) => ProgressDialog(
-              message: 'Please wait...',
+              message: AppLocalizations.of(context)
+                                .translate('Please wait...'),/////
             ));
     var details = await AssistantsMethods.obtainDirectionDetails(
         pickUpLatLng, dropOffLatLng);
@@ -254,6 +257,11 @@ class _FinishBrownState extends State<FinishBrown>
         .then((value) {
       pinicon = value;
     });
+    BitmapDescriptor.fromAssetImage(
+            ImageConfiguration(size: Size(1, 1)), 'images/car_stop_2.png')
+        .then((value) {
+      pinicon_2 = value;
+    });
   }
 
   void locatePosition() async {
@@ -382,14 +390,18 @@ class _FinishBrownState extends State<FinishBrown>
                               'way': 'null',
                             });
                           },
-                          color: Theme.of(context).accentColor,
+                          color: HexColor("#eb5844"),
                           child: Padding(
+                            
+                            
                             padding: EdgeInsets.all(17),
+                            
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  'ลงรถแล้ว',
+                                  AppLocalizations.of(context)
+                                      .translate('ลงรถแล้ว'),/////
                                   style: TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,

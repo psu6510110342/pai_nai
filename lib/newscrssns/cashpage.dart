@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:pai_nai/main.dart';
+import 'package:pai_nai/newscrssns/app_localizations.dart';
 import 'package:pai_nai/screens/finishBlue.dart';
 import 'package:pai_nai/screens/finishBrown.dart';
 import 'package:pai_nai/screens/mainscreen.dart';
@@ -79,7 +80,7 @@ class _CashpageState extends State<Cashpage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'ป้ายทะเบียน',
+                  AppLocalizations.of(context).translate('ป้ายทะเบียน'),
                   style: TextStyle(
                     color: HexColor('#29557a'),
                     fontSize: 22.0,
@@ -104,7 +105,8 @@ class _CashpageState extends State<Cashpage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'จำนวนผู้ใช้บริการในขณะนี้',
+                  AppLocalizations.of(context)
+                      .translate('จำนวนผู้ใช้บริการในขณะนี้'),
                   style: TextStyle(
                     fontSize: 17.0,
                     color: HexColor('#29557a'),
@@ -128,13 +130,14 @@ class _CashpageState extends State<Cashpage> {
           height: 20,
         ),
         Text(
-          'จำนวนบุคคลที่ต้องการใช้บริการ',
+          AppLocalizations.of(context)
+              .translate('จำนวนบุคคลที่ต้องการใช้บริการ'),
           style: TextStyle(color: HexColor('#29557a'), fontSize: 15.0),
         ),
         SizedBox(height: 5.0),
         count(),
         Text(
-          'ช่องทางการจ่ายเงิน',
+          AppLocalizations.of(context).translate('ช่องทางการจ่ายเงิน'),
           style: TextStyle(color: HexColor('#29557a'), fontSize: 15.0),
         ),
         SizedBox(height: 5.0),
@@ -196,7 +199,8 @@ class _CashpageState extends State<Cashpage> {
           SizedBox(height: 5.0),
           DropDownField(
             controller: payment,
-            hintText: "Please choose payment way",
+            hintText: AppLocalizations.of(context)
+                .translate("Please choose payment way"),
             enabled: true,
             // itemsVisibleInDropdown: 2, // //ไม่จำเป็น
             items: pay,
@@ -246,7 +250,7 @@ class _CashpageState extends State<Cashpage> {
             constraints: BoxConstraints(maxWidth: 250.0, minHeight: 50.0),
             alignment: Alignment.center,
             child: Text(
-              "Confirm!",
+              AppLocalizations.of(context).translate("Confirm!"),
               textAlign: TextAlign.center,
               style: TextStyle(color: HexColor('#ffffff'), fontSize: 15),
             )));
@@ -277,15 +281,15 @@ class _CashpageState extends State<Cashpage> {
                 size: 35.0,
               ),
               title: Text(
-                'SORRY!',
+                AppLocalizations.of(context).translate('SORRY!'),
                 style: TextStyle(
                     color: Colors.pink,
                     fontWeight: FontWeight.bold,
                     fontSize: 18.0),
               ),
             ),
-            content:
-                Text('Sorry, the number of people exceeded the standard set !'),
+            content: Text(AppLocalizations.of(context).translate(
+                'Sorry, the number of people exceeded the standard set !')),
             actions: <Widget>[
               FlatButton(
                   onPressed: () {
@@ -300,5 +304,4 @@ class _CashpageState extends State<Cashpage> {
 
 final payment = TextEditingController();
 String selectpayment = "";
-
 List<String> pay = ["cash", "bank", "paypal"];
