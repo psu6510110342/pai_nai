@@ -2,19 +2,19 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 //import 'package:flutter/cupertino.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:pai_nai/Models/new/recommended_model.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:pai_nai/Models/tample_model%20.dart';
-import 'package:pai_nai/newscreens_2/select_tem.dart';
+import 'package:pai_nai/newscreen_1/selectplace_screen_recom.dart';
 
-class Tamplescreen extends StatefulWidget {
+class Recommendedscreen extends StatefulWidget {
   final String title;
-  Tamplescreen({Key key, this.title}) : super(key: key);
+  Recommendedscreen({Key key, this.title}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _Tamplescreen();
+  State<StatefulWidget> createState() => _Recommendscreen();
 }
 
-class _Tamplescreen extends State<Tamplescreen> {
+class _Recommendscreen extends State<Recommendedscreen> {
   //final _pagecontroller = PageController(initialPage: 0);//
   final _pageController = PageController();
 
@@ -38,12 +38,12 @@ class _Tamplescreen extends State<Tamplescreen> {
             controller: _pageController,
             scrollDirection: Axis.horizontal,
             children: List.generate(
-                tamples.length,
+                recommendations.length,
                 (int index) => GestureDetector(
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => SelectedPlaceScreen3(
-                            tampleModel: tamples[index],
+                          builder: (context) => SelectedPlaceScreen(
+                            recommendedModel: recommendations[index],
                           ),
                         ));
                       },
@@ -56,7 +56,7 @@ class _Tamplescreen extends State<Tamplescreen> {
                           image: DecorationImage(
                               fit: BoxFit.cover,
                               image: CachedNetworkImageProvider(
-                                  tamples[index].image)),
+                                  recommendations[index].image)),
                         ),
                         child: Stack(
                           children: <Widget>[
@@ -81,7 +81,7 @@ class _Tamplescreen extends State<Tamplescreen> {
                                             padding: EdgeInsets.only(
                                                 left: 5.0, right: 5)),
                                         Text(
-                                          tamples[index].name,
+                                          recommendations[index].name,
                                           style: GoogleFonts.lato(
                                             fontWeight: FontWeight.w700,
                                             color: Colors.white,

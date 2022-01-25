@@ -3,16 +3,15 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:pai_nai/Models/popular_model .dart';
+import 'package:pai_nai/Models/new/nature_model.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class SelectedPlaceScreen1 extends StatelessWidget {
+class SelectedPlaceScreen6 extends StatelessWidget {
   final _pageController = PageController();
-  final PopularModel popularModel;
+  final NatureModel natureModel;
 
-  SelectedPlaceScreen1({Key key, @required this.popularModel})
-      : super(key: key);
+  SelectedPlaceScreen6({Key key, @required this.natureModel}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,13 +24,13 @@ class SelectedPlaceScreen1 extends StatelessWidget {
               controller: _pageController,
               scrollDirection: Axis.horizontal,
               children: List.generate(
-                popularModel.images.length,
+                natureModel.images.length,
                 (int index) => Container(
                   decoration: BoxDecoration(
                     image: DecorationImage(
                         fit: BoxFit.cover,
                         image: CachedNetworkImageProvider(
-                            popularModel.images[index])),
+                            natureModel.images[index])),
                   ),
                 ),
               ),
@@ -57,7 +56,7 @@ class SelectedPlaceScreen1 extends StatelessWidget {
                           borderRadius: BorderRadius.circular(9.6),
                           color: Colors.white70,
                         ),
-                        child: Icon(Icons.arrow_back) 
+                        child: Icon(Icons.arrow_back_ios),
                         //SvgPicture.asset('assets/svg/arrow.svg'),
                       ),
                     ),
@@ -77,7 +76,7 @@ class SelectedPlaceScreen1 extends StatelessWidget {
                   children: <Widget>[
                     SmoothPageIndicator(
                       controller: _pageController,
-                      count: popularModel.images.length,
+                      count: natureModel.images.length,
                       effect: ExpandingDotsEffect(
                         activeDotColor: Color(0xffffffff),
                         dotColor: Color(0xffababab),
@@ -86,26 +85,44 @@ class SelectedPlaceScreen1 extends StatelessWidget {
                         spacing: 4.8,
                       ),
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 19.2),
-                      child: Text(
-                        popularModel.tagLine,
-                        maxLines: 2,
-                        style: GoogleFonts.playfairDisplay(
-                            fontSize: 42.6,
-                            fontWeight: FontWeight.w700,
-                            color: Colors.white),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Container(
+                      height: 62.4,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(9.6),
+                          color: Colors.white54),
+                      child: Padding(
+                        padding: EdgeInsets.only(left: 12, right: 12),
+                        child: Text(
+                          natureModel.tagLine,
+                          maxLines: 2,
+                          style: GoogleFonts.playfairDisplay(
+                              fontSize: 42.6,
+                              fontWeight: FontWeight.w700,
+                              color: Colors.black),
+                        ),
                       ),
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 19.2),
-                      child: Text(
-                        popularModel.description,
-                        maxLines: 2,
-                        style: GoogleFonts.lato(
-                          fontSize: 19.2,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.white,
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Container(
+                      height: 62.4,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(9.6),
+                          color: Colors.white70),
+                      child: Padding(
+                        padding: EdgeInsets.only(left: 12, right: 12, top: 12),
+                        child: Text(
+                          natureModel.description,
+                          maxLines: 2,
+                          style: GoogleFonts.lato(
+                            fontSize: 19.2,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.black,
+                          ),
                         ),
                       ),
                     ),

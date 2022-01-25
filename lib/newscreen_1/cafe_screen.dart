@@ -2,9 +2,9 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 //import 'package:flutter/cupertino.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:pai_nai/Models/cafe_modle.dart';
+import 'package:pai_nai/Models/new/cafe_model.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:pai_nai/newscreens_2/selectplace_cafe.dart';
+import 'package:pai_nai/newscreen_1/selectplace_screen_cafe.dart';
 
 class Cafescreen extends StatefulWidget {
   final String title;

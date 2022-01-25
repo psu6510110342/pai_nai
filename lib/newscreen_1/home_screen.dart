@@ -1,19 +1,17 @@
 //import 'dart:html';//
 //import 'dart:ui';
 import 'package:flutter/material.dart';
-//import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:pai_nai/newscreens_2/cafe_screen .dart';
-import 'package:pai_nai/newscreens_2/market_screen .dart';
-import 'package:pai_nai/newscreens_2/nature_screen .dart';
-import 'package:pai_nai/newscreens_2/newdestination_screen .dart';
-import 'package:pai_nai/newscreens_2/popular_screen .dart';
-import 'package:pai_nai/newscreens_2/temple_screen.dart';
-import 'package:pai_nai/newscreens_2/recommend_screen.Dart';
-import 'package:pai_nai/screens/mainscreen.dart';
+import 'package:pai_nai/newscreen_1/cafe_screen.dart';
+import 'package:pai_nai/newscreen_1/market_screen.dart';
+import 'package:pai_nai/newscreen_1/nature_screen.dart';
+import 'package:pai_nai/newscreen_1/newdestination_screen.dart';
+import 'package:pai_nai/newscreen_1/popular_screen.dart';
+import 'package:pai_nai/newscreen_1/recommended_screen.dart';
+import 'package:pai_nai/newscreen_1/temple_screen.dart';
 
 class Homescreen extends StatefulWidget {
-  static const String idScreen = 'tourist';
   @override
   _HomescreenState createState() => _HomescreenState();
 }
@@ -39,44 +37,34 @@ class _HomescreenState extends State<Homescreen> with TickerProviderStateMixin {
             physics: BouncingScrollPhysics(),
             children: <Widget>[
               // Custom Navigation
-
               Container(
                 height: 50,
                 margin: EdgeInsets.only(top: 28.8, left: 28.8, right: 28.8),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    GestureDetector(
-                      onTap: () {
-                        MaterialPageRoute materialPageRoute = MaterialPageRoute(
-                            builder: (BuildContext context) => MainScreen());
-                        Navigator.of(context)
-                            .pushReplacement(materialPageRoute);
-                      },
-                      child: Container(
-                        height: 45,
-                        width: 45,
-                        padding: EdgeInsets.all(14),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(10),
-                              topRight: Radius.circular(10),
-                              bottomLeft: Radius.circular(10),
-                              bottomRight: Radius.circular(10)),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.1),
-                              spreadRadius: 1,
-                              blurRadius: 2,
-                              offset:
-                                  Offset(0, 1), // changes position of shadow
-                            )
-                          ],
-                          color: Color(0x080a0928),
-                        ),
-                        child: Icon(Icons.arrow_back),
-                        //SvgPicture.asset('assets/svg/arrow.svg'),
+                    Container(
+                      height: 45,
+                      width: 45,
+                      padding: EdgeInsets.all(14),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(10),
+                            topRight: Radius.circular(10),
+                            bottomLeft: Radius.circular(10),
+                            bottomRight: Radius.circular(10)),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.1),
+                            spreadRadius: 1,
+                            blurRadius: 2,
+                            offset: Offset(0, 1), // changes position of shadow
+                          )
+                        ],
+                        color: Color(0x080a0928),
                       ),
+                      child: Icon(Icons.arrow_back_ios),
+                      //SvgPicture.asset('assets/svg/arrow.svg'),
                     ),
                   ],
                 ),

@@ -2,20 +2,19 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 //import 'package:flutter/cupertino.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:pai_nai/Models/recommended_model .dart';
-import 'package:pai_nai/newscreens_2/select_recom.dart';
 import 'package:google_fonts/google_fonts.dart';
-//import 'package:pai_nai/screens/selectplace_screen_recom.dart';
+import 'package:pai_nai/Models/new/nature_model.dart';
+import 'package:pai_nai/newscreen_1/selectplace_screen_nature.dart';
 
-class Recommendedscreen extends StatefulWidget {
+class NatureScreen extends StatefulWidget {
   final String title;
-  Recommendedscreen({Key key, this.title}) : super(key: key);
+  NatureScreen({Key key, this.title}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _Recommendscreen();
+  State<StatefulWidget> createState() => _Naturescreen();
 }
 
-class _Recommendscreen extends State<Recommendedscreen> {
+class _Naturescreen extends State<NatureScreen> {
   //final _pagecontroller = PageController(initialPage: 0);//
   final _pageController = PageController();
 
@@ -39,12 +38,12 @@ class _Recommendscreen extends State<Recommendedscreen> {
             controller: _pageController,
             scrollDirection: Axis.horizontal,
             children: List.generate(
-                recommendations.length,
+                natures.length,
                 (int index) => GestureDetector(
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => SelectedPlaceScreen(
-                            recommendedModel: recommendations[index],
+                          builder: (context) => SelectedPlaceScreen6(
+                            natureModel: natures[index],
                           ),
                         ));
                       },
@@ -57,7 +56,7 @@ class _Recommendscreen extends State<Recommendedscreen> {
                           image: DecorationImage(
                               fit: BoxFit.cover,
                               image: CachedNetworkImageProvider(
-                                  recommendations[index].image)),
+                                  natures[index].image)),
                         ),
                         child: Stack(
                           children: <Widget>[
@@ -82,7 +81,7 @@ class _Recommendscreen extends State<Recommendedscreen> {
                                             padding: EdgeInsets.only(
                                                 left: 5.0, right: 5)),
                                         Text(
-                                          recommendations[index].name,
+                                          natures[index].name,
                                           style: GoogleFonts.lato(
                                             fontWeight: FontWeight.w700,
                                             color: Colors.white,

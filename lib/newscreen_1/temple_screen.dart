@@ -3,20 +3,18 @@ import 'package:flutter/material.dart';
 //import 'package:flutter/cupertino.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:pai_nai/Models/nature_modle.dart';
-import 'package:pai_nai/newscreens_2/select_nature.dart';
-//import 'package:painai/models/nature_model.dart';
-//import 'package:painai/screens/selectplace_screen_nature.dart';
+import 'package:pai_nai/Models/new/tample_model.dart';
+import 'package:pai_nai/newscreen_1/selectplace_screenc_tem.dart';
 
-class NatureScreen extends StatefulWidget {
+class Tamplescreen extends StatefulWidget {
   final String title;
-  NatureScreen({Key key, this.title}) : super(key: key);
+  Tamplescreen({Key key, this.title}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _Naturescreen();
+  State<StatefulWidget> createState() => _Tamplescreen();
 }
 
-class _Naturescreen extends State<NatureScreen> {
+class _Tamplescreen extends State<Tamplescreen> {
   //final _pagecontroller = PageController(initialPage: 0);//
   final _pageController = PageController();
 
@@ -40,12 +38,12 @@ class _Naturescreen extends State<NatureScreen> {
             controller: _pageController,
             scrollDirection: Axis.horizontal,
             children: List.generate(
-                natures.length,
+                tamples.length,
                 (int index) => GestureDetector(
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => SelectedPlaceScreen6(
-                            natureModel: natures[index],
+                          builder: (context) => SelectedPlaceScreen3(
+                            tampleModel: tamples[index],
                           ),
                         ));
                       },
@@ -58,7 +56,7 @@ class _Naturescreen extends State<NatureScreen> {
                           image: DecorationImage(
                               fit: BoxFit.cover,
                               image: CachedNetworkImageProvider(
-                                  natures[index].image)),
+                                  tamples[index].image)),
                         ),
                         child: Stack(
                           children: <Widget>[
@@ -83,7 +81,7 @@ class _Naturescreen extends State<NatureScreen> {
                                             padding: EdgeInsets.only(
                                                 left: 5.0, right: 5)),
                                         Text(
-                                          natures[index].name,
+                                          tamples[index].name,
                                           style: GoogleFonts.lato(
                                             fontWeight: FontWeight.w700,
                                             color: Colors.white,

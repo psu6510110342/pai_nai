@@ -6,7 +6,7 @@ import 'package:flutter/rendering.dart';
 //import 'package:pai_nai/screens/map.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:pai_nai/newscreens_2/home_screen.dart';
+import 'package:pai_nai/newscreen_1/home_screen.dart';
 import 'package:pai_nai/newscrssns/home.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 //import 'package:translator/translator.dart';

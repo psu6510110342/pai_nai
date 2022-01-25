@@ -96,7 +96,8 @@ flutter:
      - images/car_map_2.png
      - images/logo.jpg
      - images/logo_2.png
-     #- assets/svg/arrow.svg
+     - images/pin.png
+    # - images/arrow.svg
      - lang/en.json
      - lang/zh.json
      - lang/th.json

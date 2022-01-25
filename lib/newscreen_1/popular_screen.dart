@@ -2,11 +2,9 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 //import 'package:flutter/cupertino.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:pai_nai/Models/popular_model .dart';
-import 'package:pai_nai/newscreens_2/select_pop.dart';
-
+import 'package:pai_nai/Models/new/popular_model.dart';
 import 'package:google_fonts/google_fonts.dart';
-//import 'package:painai/screens/selectplace_screen_pop.dart';
+import 'package:pai_nai/newscreen_1/selectplace_screen_pop.dart';
 
 class Popularscreen extends StatefulWidget {
   final String title;

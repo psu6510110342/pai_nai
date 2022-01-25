@@ -2,22 +2,19 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 //import 'package:flutter/cupertino.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:pai_nai/Models/new/newdestination_model.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:pai_nai/Models/market_modle.dart';
-import 'package:pai_nai/newscreens_2/selectplace_market.dart';
+import 'package:pai_nai/newscreen_1/selectplace_screenc_new.dart';
 
-class Marketscreen extends StatefulWidget {
+class Newdestinationscreen extends StatefulWidget {
   final String title;
-  Marketscreen({Key key, this.title}) : super(key: key);
+  const Newdestinationscreen({Key key, this.title}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _Marketscreen();
+  State<StatefulWidget> createState() => _Newdestinationscreen();
 }
 
-class _Marketscreen extends State<Marketscreen> {
-  //final _pagecontroller = PageController(initialPage: 0);//
-  final _pageController = PageController();
-
+class _Newdestinationscreen extends State<Newdestinationscreen> {
   @override
   void initState() {
     super.initState();
@@ -35,15 +32,15 @@ class _Marketscreen extends State<Marketscreen> {
           margin: EdgeInsets.only(top: 16),
           child: PageView(
             physics: BouncingScrollPhysics(),
-            controller: _pageController,
+            //controller: _pageController,
             scrollDirection: Axis.horizontal,
             children: List.generate(
-                markets.length,
+                newdestinations.length,
                 (int index) => GestureDetector(
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => SelectedPlaceScreen5(
-                            marketModel: markets[index],
+                          builder: (context) => SelectedPlaceScreen2(
+                            newdestinationModel: newdestinations[index],
                           ),
                         ));
                       },
@@ -56,7 +53,7 @@ class _Marketscreen extends State<Marketscreen> {
                           image: DecorationImage(
                               fit: BoxFit.cover,
                               image: CachedNetworkImageProvider(
-                                  markets[index].image)),
+                                  newdestinations[index].image)),
                         ),
                         child: Stack(
                           children: <Widget>[
@@ -81,7 +78,7 @@ class _Marketscreen extends State<Marketscreen> {
                                             padding: EdgeInsets.only(
                                                 left: 5.0, right: 5)),
                                         Text(
-                                          markets[index].name,
+                                          newdestinations[index].name,
                                           style: GoogleFonts.lato(
                                             fontWeight: FontWeight.w700,
                                             color: Colors.white,
