@@ -95,15 +95,15 @@ class _MapdriverState extends State<Mapdriver> {
 
     final uid = auth.currentUser.uid;
     DatabaseReference ref = FirebaseDatabase.instance.reference();
-    ref.child('amount/$uid/count').once().then((DataSnapshot datasnapshot) {
-    //   print('Data : ${datasnapshot.value.toString()}');
-    //   ct = datasnapshot.value.toString();
-    //   p_count = int.parse(ct);
-    // });
+    // ref.child('amount/$uid/count').once().listen((DataSnapshot datasnapshot) {
+    //    print('Data : ${datasnapshot.value.toString()}');
+    //    ct = datasnapshot.value.toString();
+    //    p_count = int.parse(ct);
+    //  });
 
     //ref.child('amount/$uid/count').onValue.listen((DatabaseEvent event) {
 
-    });
+    // });
     super.initState();
 
     // final player = AudioCache();
