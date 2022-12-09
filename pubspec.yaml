@@ -46,6 +46,8 @@ dependencies:
   smooth_page_indicator: ^0.2.1
   url_launcher: ^5.4.2
   dropdownfield: ^1.0.3
+  audioplayers: ^0.17.4
+  assets_audio_player: ^2.0.10
   
   
 
@@ -101,6 +103,7 @@ flutter:
      - lang/en.json
      - lang/zh.json
      - lang/th.json
+     - sound/sound_count.mp3
      
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -125,5 +128,14 @@ flutter:
     - family: Brand-Bold
       fonts:
          - asset: fonts/bolt-semibold.ttf
+
+    - family: Quark-Bold
+      fonts:
+         - asset : fonts/Quark-Bold.otf
+    
+    - family: Quark-Light
+      fonts:
+         - asset : fonts/Quark-Light.otf
+
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -34,6 +35,8 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
 
   DirectionDetails tripDirectionDetails; //
   bool drawOpen = true;
+  int ct;
+  int count_num;
   double rideDetailContainerHeight = 0;
   double searchContainerHeight = 205;
   double carOutHeight = 0;
@@ -317,7 +320,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                 ),
                 child: Padding(
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 24, vertical: 18),
+                      const EdgeInsets.symmetric(horizontal: 24, vertical: 15),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [

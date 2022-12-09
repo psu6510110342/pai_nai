@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dropdownfield/dropdownfield.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:geoflutterfire/geoflutterfire.dart';
@@ -96,6 +97,7 @@ class _BodysignupState extends State<Bodysignup> {
     var lngi = position.longitude;
     int count = 0;
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    FirebaseDatabase firebaseDatabase = FirebaseDatabase.instance;
     if (user != null) {
       user.updateProfile(displayName: nameString);
       GeoFirePoint pointuser = geo.point(latitude: 0, longitude: 0);
@@ -123,6 +125,10 @@ class _BodysignupState extends State<Bodysignup> {
           'lat': '$lati',
           'lng': '$lngi',
           'driverPlate': '$driverPlate',
+          'count': '$count'
+        });
+        var amount = firebaseDatabase.reference().child('amount').child('$user_uid');
+        amount.set({
           'count': '$count'
         });
         MaterialPageRoute materialPageRoute =

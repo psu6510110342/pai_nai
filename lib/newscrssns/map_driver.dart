@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'package:assets_audio_player/assets_audio_player.dart';
+import 'package:audioplayers/audio_cache.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -9,9 +11,10 @@ import 'package:pai_nai/newscrssns/app_localizations.dart';
 import 'package:pai_nai/newscrssns/setting.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:geoflutterfire/geoflutterfire.dart';
 import 'package:pai_nai/newscrssns/setting_driver.dart';
+
+import 'package:audioplayers/audioplayers.dart';
 
 class Mapdriver extends StatefulWidget {
   static const String idScreen = 'mapDriver';
@@ -34,6 +37,8 @@ class _MapdriverState extends State<Mapdriver> {
   final DatabaseReference databaseReference =
       FirebaseDatabase.instance.reference();
 
+  final FirebaseAuth auth = FirebaseAuth.instance;
+
   bool mapToggle = false;
   var currentLocation;
 
@@ -44,6 +49,10 @@ class _MapdriverState extends State<Mapdriver> {
 
   // Set<Marker> allMarkers = {};
   // BitmapDescriptor mapMarker;
+  int p_count = 0;
+  int a = 0;
+  String ct;
+  final assetsAudioPlayer = AssetsAudioPlayer();
 
   void writedata() {
     databaseReference.child('LatLng').set({
@@ -75,13 +84,39 @@ class _MapdriverState extends State<Mapdriver> {
 
   BitmapDescriptor pinicon;
 
+  @override
   void initState() {
-    super.initState();
+    
     BitmapDescriptor.fromAssetImage(
             ImageConfiguration(size: Size(1, 1)), 'images/user_icon_map.png')
         .then((value) {
       pinicon = value;
     });
+
+    final uid = auth.currentUser.uid;
+    DatabaseReference ref = FirebaseDatabase.instance.reference();
+    ref.child('amount/$uid/count').once().then((DataSnapshot datasnapshot) {
+    //   print('Data : ${datasnapshot.value.toString()}');
+    //   ct = datasnapshot.value.toString();
+    //   p_count = int.parse(ct);
+    // });
+
+    //ref.child('amount/$uid/count').onValue.listen((DatabaseEvent event) {
+
+    });
+    super.initState();
+
+    // final player = AudioCache();
+    // int number = 0;
+    // if (p_count == 8 && number == 0) {
+    //   assetsAudioPlayer.open(Audio('sound/sound_count.mp3'));
+    //   player.play('sound_count.mp3');
+    //   number = 1;
+    // } else if (p_count < 8 && p_count > -1) {
+    //   number = 0;
+    // } else {
+    //   number = 1;
+    // }
   }
 
   getMarkerData() async {
@@ -118,10 +153,7 @@ class _MapdriverState extends State<Mapdriver> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
-        children: [
-          showGoogleMap(),
-          switch_locate(),
-        ],
+        children: [showGoogleMap(), switch_locate(), number()],
       ),
       backgroundColor: Colors.grey.shade100,
     );
@@ -131,7 +163,8 @@ class _MapdriverState extends State<Mapdriver> {
     return Row(
       children: [
         SwitchListTile(
-            title: Text(AppLocalizations.of(context).translate('เปิดตำแหน่งของท่าน')),
+            title: Text(
+                AppLocalizations.of(context).translate('เปิดตำแหน่งของท่าน')),
             value: _openlocation,
             onChanged: (bool value) {
               setState(() {
@@ -248,144 +281,10 @@ class _MapdriverState extends State<Mapdriver> {
     });
   }
 
-  // List<Marker> allMarker = [];
-  // setMarkers(){
-  //   return allMarkers;
-  // }
-
-  // //marker
-  // Widget loadmap(){
-  //   return StreamBuilder(stream: FirebaseFirestore.instance.collection('collectionPath').snapshots(),
-  //   builder: (context,snapshot){
-  //     if(!snapshot.hasData) return Text('Loading Data Please wait...');
-  //     for (int i = 0; i < snapshot.data.documents.length; i++){
-  //       allMarkers.add(new Marker(width: 45.0,height: 445.0, point : new LatLng( snapshot.data, longitude)))
-  //     }
-  //   } );
-  // }
-
-  // Future addMarker()async{
-  //   await showDialog(context: context,
-  //   barrierDismissible: true,
-  //   builder : (BuildContext context){
-  //     return new SimpleDialog(
-  //       title : new Text('Add marker',style: new TextStyle(fontSize: 17.0),),
-  //       children: <Widget>[
-  //         new SimpleDialogOption(
-  //           child : new Text('Add it',style : new TextStyle(color: Colors.blue)),
-  //           onPressed: (){
-  //             addToList();
-  //             Navigator.of(context).pop();
-  //           },
-  //         )
-  //       ],
-  //     );
-  //   }
-  //   );
-  // }
-
-  // addToList()async{
-  //   final query = "...";
-  //   var address = await Geocoder.local.findAddressesFromQuery(query);
-  //   var first = address.first;
-  //   setState(() {
-  //     allMarkers.add(new Marker(width:45.0,height : 45.point: new LatLng(first.coordinates.lati)));
-  //   });
-  // }
-
-  // Future<Widget> showlocate() async {
-  //   FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-  //   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
-  //   var user_uid = firebaseAuth.currentUser.uid;
-  //   DocumentSnapshot documentSnapshot;
-  //   await FirebaseFirestore.instance
-  //       .collection('profile')
-  //       .doc('$user_uid')
-  //       .get()
-  //       .then((value) {
-  //     documentSnapshot = value;
-  //   });
-  //   var type = documentSnapshot['type'];
-  //   if ('$type' == 'driver') {
-  //     return ListView(
-  //       children: [
-  //         SwitchListTile(
-  //             title: Text('เปิดตำแหน่งของท่าน'),
-  //             value: _openlocation,
-  //             onChanged: (bool value) {
-  //               setState(() {
-  //                 _openlocation = value;
-  //               });
-
-  //               if (_openlocation) {
-  //                 setdata();
-  //               } else {
-  //                 deletedata();
-  //               }
-  //             })
-  //       ],
-  //     );
-  //   }
-  // }
-
   Geoflutterfire geo = Geoflutterfire();
 
-  // //upload datatype(geo) to firebase example ****
-  // Future<DocumentReference> addData()async{
-  //   //var pos = await location.getLocation();
-  //   GeoFirePoint point = geo.point(latitude: null, longitude: null);
-  //   FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-  //   return firebaseFirestore.collection('...').add({
-  //     'geo' : point.data
-  //   });
-  // }
-
-  /* @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    Geolocator.getCurrentPosition().then((currloc) {
-      setState(() {
-        currentLocation = currloc;
-        // mapToggle = true; //use to detect googlemap was opened?
-        populateClients();
-      });
-    });
-    // setupCustomMarker();
-  }
- */
-  /* var clients = [];
-  populateClients() {
-    clients = [];
-    FirebaseFirestore.instance.collection('collectionPath').get().then((doc) {
-      if (doc.docs.isNotEmpty) {
-        for (int i = 0; i < doc.docs.length; ++i) {
-          clients.add(doc.docs[i].data);
-          initMarker(doc.docs[i].data);
-        }
-      }
-    });
-  }
- */
   GoogleMapController mapController;
-  /* var marker_locate = [];
-  initMarker(client) {
-    setState(() {
-      marker_locate.add(Marker(
-          markerId:
-              MarkerId(client['userid']), //'userid' เราใส่มั่วๆค่อยใส่อีกที
-          position: LatLng(
-              client['location'].latitude,
-              client['location']
-                  .longitude), //'location' คือ ชื่อของตัวแปรที่เก็บใน firebase
-          draggable: false,
-          infoWindow: InfoWindow(
-              snippet:
-                  client['name']) //'name' คือ ชื่อตัวแปรที่เก็บชื่อใน firebase
-          ));
-    });
-  }
- */
+
   //เริ่มเก็บตำแหน่ง
   Future<void> setdata() async {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
@@ -529,6 +428,104 @@ class _MapdriverState extends State<Mapdriver> {
     });
   } */
 
+  // Widget showcount() {
+  //   return Container(
+  //     padding: EdgeInsets.only(left: 5.0, right: 100.0, bottom: 110.0),
+  //     height: 30,
+  //     decoration: BoxDecoration(
+  //       borderRadius: BorderRadius.all(Radius.circular(20)),
+  //       boxShadow: [
+  //         BoxShadow(
+  //           offset: Offset(0, -10),
+  //           blurRadius: 35,
+  //           color: HexColor("#f8f8f8"),
+  //         ),
+  //       ],
+  //     ),
+  //     child: Row(
+  //       children: <Widget>[
+  //         Text(
+  //           'Hello',
+  //           style: TextStyle(
+  //               color: HexColor('#a0e209'),
+  //               // color: (count < 8 && count >= 0)
+  //               //     ? HexColor('#a0e209')
+  //               //     : HexColor('#ff1807'),
+  //               fontFamily: 'Quark-Light',
+  //               fontSize: 20.0),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
+
+  Widget number() {
+    return Positioned(
+      left: 5,
+      right: 250,
+      bottom: 165,
+      child: AnimatedContainer(
+        curve: Curves.bounceIn,
+        duration: new Duration(milliseconds: 160),
+        child: Container(
+          height: 80.0,
+          decoration: BoxDecoration(
+            color: HexColor("#696969"),
+            borderRadius: BorderRadius.all(Radius.circular(15)),
+            boxShadow: [
+              BoxShadow(
+                color: HexColor("#f8f8f8"),
+                blurRadius: 6,
+                spreadRadius: 0.5,
+                offset: Offset(0.7, 0.7),
+              ),
+            ],
+          ),
+          child: Padding(
+            padding: const EdgeInsets.only(left: 17.0, top: 12.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              //mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Row(
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.only(top: 2.0),
+                      child: Text(
+                        '$p_count',
+                        style: TextStyle(
+                          color: (p_count < 8 && p_count >= 0)
+                              ? HexColor('#a0e209')
+                              : HexColor('#ff1807'),
+                          fontFamily: 'Quark-Bold',
+                          fontSize: 40.0,
+                        ),
+                      ),
+                    ),
+                    Icon(
+                      Icons.person_outline_rounded,
+                      size: 50.0,
+                    )
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  void count() {
+    final uid = auth.currentUser.uid;
+    DatabaseReference ref = FirebaseDatabase.instance.reference();
+    ref.child('amount/$uid/count').once().then((DataSnapshot datasnapshot) {
+      print('Data : ${datasnapshot.value.toString()}');
+      ct = datasnapshot.value.toString();
+      p_count = int.parse(ct);
+    });
+  }
+
   Widget switch_locate() {
     return Positioned(
       left: 0,
@@ -569,9 +566,13 @@ class _MapdriverState extends State<Mapdriver> {
                       if (_openlocation == true) {
                         setdata();
                         getMarkerData();
+                        count();
+                        
+                        
                       } else {
                         deletedata();
                         markersSet.clear();
+                        p_count = 0;
                       }
                     });
                   },
@@ -745,3 +746,107 @@ class Bottomnavbar extends StatelessWidget {
     );
   }
 }
+
+// Widget showcount() {
+//   return Container(
+//     padding: EdgeInsets.only(left: 5.0, right: 100.0, bottom: 110.0),
+//     height: 30,
+//     decoration: BoxDecoration(
+//       borderRadius: BorderRadius.all(Radius.circular(20)),
+//       boxShadow: [
+//         BoxShadow(
+//           offset: Offset(0, -10),
+//           blurRadius: 35,
+//           color: HexColor("#f8f8f8"),
+//         ),
+//       ],
+//     ),
+//     child: Column(
+//       children: <Widget>[
+//         Text(
+//           '$count',
+//           style: TextStyle(
+//               color: (count < 8 && count >= 0)
+//                   ? HexColor('#a0e209')
+//                   : HexColor('#ff1807'),
+//               fontFamily: 'Quark-Light',
+//               fontSize: 20.0),
+//         ),
+//       ],
+//     ),
+//   );
+// }
+
+// class CountShow extends StatefulWidget {
+//   const CountShow({Key key}) : super(key: key);
+
+//   @override
+//   State<CountShow> createState() => _CountShowState();
+// }
+
+// class _CountShowState extends State<CountShow> {
+//   int count;
+//   String ct;
+//   final FirebaseAuth auth = FirebaseAuth.instance;
+//   //final assetsAudioPlayer = AssetsAudioPlayer();
+
+//   @override
+//   void initState() {
+//     super.initState();
+//     final uid = auth.currentUser.uid;
+//     DatabaseReference ref = FirebaseDatabase.instance.reference();
+//     ref.child('amount/$uid/count').once().then((DataSnapshot datasnapshot) {
+//       print('Data : ${datasnapshot.value.toString()}');
+//       ct = datasnapshot.value.toString();
+//       count = int.parse(ct);
+//     });
+
+//     //final player = AudioCache();
+//     int number = 0;
+//     if (count == 8 && number == 0) {
+//       //assetsAudioPlayer.open(Audio('sound/sound_count.mp3'));
+//       //player.play('sound_count.mp3');
+//       number = 1;
+//     } else if (count < 8 && count > -1) {
+//       number = 0;
+//     } else {
+//       number = 1;
+//     }
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       padding: EdgeInsets.only(left: 5.0, right: 5.0, bottom: 110.0),
+//       height: 30,
+//       decoration: BoxDecoration(
+//         borderRadius: BorderRadius.all(Radius.circular(20)),
+//         boxShadow: [
+//           BoxShadow(
+//             offset: Offset(0, -10),
+//             blurRadius: 35,
+//             color: HexColor("#f8f8f8"),
+//           ),
+//         ],
+//       ),
+//       child: Column(
+//         children: <Widget>[
+//           Row(
+//             children: <Widget>[
+//               Text(
+//                 '$count',
+//                 style: TextStyle(
+//                     color: (count < 8 && count >= 0)
+//                         ? HexColor('#a0e209')
+//                         : HexColor('#ff1807'),
+//                     fontFamily: 'Quark-Light',
+//                     fontSize: 20.0),
+//               ),
+//               Icon(Icons.person_outline_rounded,color: HexColor('#eb5844'),)
+//             ],
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }

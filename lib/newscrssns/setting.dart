@@ -460,7 +460,7 @@ class Bottomnavbar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(left: 70.0, right: 70.0, bottom: 5.0),
+      padding: EdgeInsets.only(left: 58.0, right: 58.0, bottom: 5.0),
       height: 60,
       decoration: BoxDecoration(
         boxShadow: [

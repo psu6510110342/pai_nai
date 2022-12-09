@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dropdownfield/dropdownfield.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -23,7 +24,7 @@ class Cashpage extends StatefulWidget {
 
 class _CashpageState extends State<Cashpage> {
   int _n = 0;
-  int count_num;
+  int count_num = 0;
 
   String uid;
 
@@ -31,14 +32,24 @@ class _CashpageState extends State<Cashpage> {
   var plate_car;
   int cnum;
 
+  String ct;
+
   @override
   void initState() {
     super.initState();
     uid = widget.markerId;
     color = widget.colorWay;
     plate_car = widget.plate;
-    count_num = widget.count;
-    cnum = widget.count;
+    //count_num = widget.count;
+    //cnum = widget.count;
+    DatabaseReference ref = FirebaseDatabase.instance.reference();
+    ref.child('amount/$uid/count').once().then((DataSnapshot datasnapshot) {
+      print('Data : ${datasnapshot.value.toString()}');
+      ct = datasnapshot.value.toString();
+      count_num = int.parse(ct);
+      cnum = int.parse(ct);
+    });
+    
   }
 
   void minus() {
@@ -54,9 +65,10 @@ class _CashpageState extends State<Cashpage> {
     setState(() {
       _n = _n + 1;
       count_num = count_num + 1;
-      if (count_num == 8) {
-        myAlertcount();
-      } else if (count_num > 8) {
+      // if (count_num == 8) {
+      //   myAlertcount();
+      // } else 
+      if (count_num > 8) {
         _n--;
         myAlertcount();
       }
@@ -223,7 +235,7 @@ class _CashpageState extends State<Cashpage> {
   Widget button() {
     return RaisedButton(
         onPressed: () {
-          db_count();
+          //db_count();
           //count_num = count_num + _n;
           if ('$color' == 'สายสีน้ำเงิน') {
             MaterialPageRoute materialPageRoute = MaterialPageRoute(
@@ -256,7 +268,7 @@ class _CashpageState extends State<Cashpage> {
             )));
   }
 
-  Future<void> db_count() async {
+  /*Future<void> db_count() async {
     //count_num = count_num + _n;
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     await firebaseFirestore
@@ -265,7 +277,7 @@ class _CashpageState extends State<Cashpage> {
         .collection('$color')
         .doc('$uid')
         .update({'count': '$count_num'});
-  }
+  }*/
 
   void myAlertcount() {
     showDialog(
